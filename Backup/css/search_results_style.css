@@ -1,0 +1,141 @@
+<style type="text/css">
+    body{
+      font-family:sans-serif;
+      width: 800px;
+      font-size:20;
+      margin: 0 auto;
+      padding: 10px;
+    }
+  
+    label{
+      display: block;
+      font-size:20px;
+      }
+      input[type=text]{
+          width:400px;
+          font-size:20px;
+          padding:2px;          
+      }
+      textarea{
+          width:800px;
+          height:100px;
+          font-size:17px;
+          font-family:monospace;
+          }
+       input[type=submit]{
+          font-size:20;
+       }
+       .food_title{
+	    position: relative;	  
+            font-size:30px;
+            font-family:sanserif;
+            top: 10%; 
+            left: 0px;
+            color: #6E6E6E; 
+           }  
+           .food_price
+           {
+            position: relative;
+            font-size:25px;
+            font-family:sanserif;
+            top: 6%; 
+            left: 300px;
+            color: #A4A4A4; 
+           }	  
+	    
+	   .food_date
+           {
+            position: relative;
+            font-size:25px;
+            font-family:sanserif;
+            top: 2%; 
+            left: 600px;
+            color: #A4A4A4; 
+           }
+	   .food_chef
+           {
+            position: relative;
+            font-size:25px;
+            font-family:sanserif;
+            top: -2%; 
+            left: 960px;
+            color: #A4A4A4; 
+           }
+	   .food_chef_rating
+           {
+            position: relative;
+            font-size:25px;
+            font-family:sanserif;
+            top: -10px; 
+            left: 930px;
+            color: #A4A4A4; 
+           }
+	  .food_picture
+           {
+            position: relative;            
+            left: 1150px;
+	    top: -100px; 
+            color: #A4A4A4; 
+           }
+	   
+       .post-heading{
+           position: relative;
+           border-bottom: 4px solid #666;
+           }
+        .login_placeholder{
+            position: absolute;
+            top: 02%; 
+            left: 1200px;
+           }
+        .edit_placeholder{
+            position: absolute;
+            top: 02%; 
+            left: 1000px;
+           }   
+        .content_place{
+            position: absolute;
+            font-size:24px;
+            font-family:sanserif;
+            top: 02%; 
+            left: 10px;
+           }
+		.whosaid_place{
+            position: relative;
+            top: 10%; 
+            font-size:14px;
+            font-family:monospace;
+            color: grey            
+           }  
+          .category_place{
+            position: relative;
+            left: 1200px;
+            top: 10%; 
+            font-size:14px;
+            font-family:monospace;
+            color: grey;          
+           }
+	  
+	  .wrapper:hover label{
+		background-position:left bottom;
+    	}
+	.rating_label{
+		background:url('http://img833.imageshack.us/img833/5959/stard.png') no-repeat left bottom;
+		float:right;
+		line-height:20px;	
+		padding-left:20px;
+		height:15px;
+	}
+	input:checked+label,.wrapper:hover label:hover,.wrapper:hover label:hover~label{
+		background-position:0px -1px;
+	}
+	.rating_radio:checked~label{
+		background-position:0px -1px;
+	}	
+	.rating_radio{
+		display:none;
+	}
+	.wrapper{
+		float:left;
+	}
+           
+    </style>

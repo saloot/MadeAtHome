@@ -1,0 +1,281 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+	
+			
+	<div class="container marketing" style="margin-top:150px;">
+		<div class="span10">
+			<h1> What would like to offer today? </h1>
+			<form method="post" enctype="multipart/form-data" class="form-horizontal">
+				
+				<div class="control-group">
+					<label class="control-label" for="meal_desired_title">Meal title</label>
+					<div class="controls">
+						<input type="text" name="meal_desired_title" style="width:75%;" value={{customized_meal_title}} >
+						<div style="color: red">{{error_title}}</div>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="meal_type_selector">Meal type</label>
+					<div class="controls">
+						<select name="meal_type" id="meal_type_selector">
+							{% for food in food_types_list%}
+								<option value="{{food}}">{{food}}</option>
+							{% endfor %}			
+						</select>
+						<div style="color: red">{{error_type}}</div>
+					</div>
+				</div>
+				
+				
+				<div class="control-group">
+					<label class="control-label" for="meal_dater">When?</label>
+					<div class="controls">
+						<input type="datetime-local" name="meal_date" value={{date_of_meal}} id="meal_dater">
+						<div style="color: red">{{error_date}}</div>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="pricee">Price per meal</label>
+					<div class="controls">
+						<input type="number" name="meal_price" value={{price_of_meal}} min="0" id="pricee">
+						<div style="color: red">{{error_price}}</div>
+					</div>
+				</div>
+		
+	
+	
+				<div class="control-group">
+					<label class="control-label" for="max_quant">Max quantit</label>
+					<div class="controls">
+						<input type="number" name="meal_quantity" value={{quantity_of_meal}} min="0" id="max_quant">
+						<div style="color: red">{{error_quantity}}</div>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="ingrets">Ingredients</label>
+					<div class="controls">
+						<table style="font-size: 20px;">
+							{% for ingredient in ingredients_list%}
+								{% if forloop.counter0|divisibleby:4 %}
+									<tr>
+								{% endif %}
+								<td>
+									<label class="checkbox">	
+										<input type="checkbox" id ="{{ingredient}}" name="meal_ingredients" value="{{ingredient}}" id="ingrets">{{ingredient}}
+									</label>
+								</td>
+								{% if forloop.counter|divisibleby:4 %}
+									</tr>
+								{% endif %}	
+							{% endfor %}
+						</table>
+						<div style="color: red">{{error_ingredients}}</div>
+					</div>
+				</div>
+				
+				
+				
+				<div class="control-group">
+					<label class="control-label" for="meal_desc">Meal description</label>
+					<div class="controls">
+						<textarea rows="10" style="width:120%" name="description_of_meal" id="meal_desc">
+							{{description_meal}}
+						</textarea>					
+						<div style="color: red">{{error_description}}</div>
+					</div>
+				</div>
+				
+				
+				<div class= "row" style="float:left;padding-right:40px;">
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-new thumbnail" style="width: 120px; height: 90px;">
+							<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+						</div>
+						<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+						</div>
+						<div>
+							<span class="btn btn-file">
+							<span class="fileupload-new">
+									Select image
+							</span>
+							<span class="fileupload-exists">
+								Change
+							</span>
+								<input type="file" name="food_img1" id="img_files" />
+							</span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						</div>
+						<div style="color: red">{{error_image}}</div>
+					</div>
+				</div>
+				
+				<div class= "row" style="float:left;padding-right:40px;">
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-new thumbnail" style="width: 120px; height: 90px;">
+							<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+						</div>
+						<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+						</div>
+						<div>
+							<span class="btn btn-file">
+							<span class="fileupload-new">
+								Select image
+							</span>
+							<span class="fileupload-exists">
+								Change
+							</span>
+							<input type="file" name="food_img2" id="img_files" />
+						</span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						</div>
+						<div style="color: red">{{error_image}}</div>
+					</div>
+				</div>
+				
+				<div class= "row" style="float:left;padding-right:10px;">
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-new thumbnail" style="width: 120px; height: 90px;">
+							<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+						</div>
+						<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+						</div>
+						<div>
+							<span class="btn btn-file">
+							<span class="fileupload-new">
+								Select image
+							</span>
+							<span class="fileupload-exists">
+								Change
+							</span>
+							<input type="file" name="food_img3" id="img_files" />
+						</span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						</div>
+						<div style="color: red">{{error_image}}</div>
+					</div>
+				</div>
+				
+				
+				
+				<div class= "row"  >
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="fileupload-new thumbnail" style="width: 120px; height: 90px;">
+							<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" />
+						</div>
+						<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;">
+						</div>
+						<div>
+							<span class="btn btn-file">
+							<span class="fileupload-new">
+								Select image
+							</span>
+							<span class="fileupload-exists">
+								Change
+							</span>
+							<input type="file" name="food_img4" id="img_files" />
+						</span>
+							<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						</div>
+						<div style="color: red">{{error_image}}</div>
+					</div>
+				</div>
+				
+				
+					
+				<label style="font-size: 15px;">The final meal should match the phot. Otherwise,
+							the buyer can refuse to pay!</label>
+						
+					
+				
+				
+				<button type="submit" class="btn btn-primary" style="width:100px;font-size:20px;height:40px;">Submit</button>
+			</form>
+		</div>
+	</div>
+	<script src="./bootstrap/docs-assets/js/jquery.js"></script>
+    <script src="./bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./bootstrap/docs-assets/js/holder.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <script src="./js/bbootstrap.min.js"></script>
+		
+</body>
+  {% endblock %}
+<!-- OLD VErsion 
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/new_post_style.css">
+</head>
+
+
+
+    
+	
+	<br>
+	<br>
+	
+	<div style="color: red">{{error_title}}</div>
+	<br>
+	
+	<label> 
+		<div> When? </div>
+		<input type="datetime-local" name="meal_date" value={{date_of_meal}}>
+	</label>
+	<div style="color: red">{{error_date}}</div>
+	<br>
+	
+	<label> 
+		<div> Price per meal </div>
+		<input type="number" name="meal_price" value={price_of_meal}} min="0">
+	</label>
+	<div style="color: red">{{error_price}}</div>
+	<br>
+		
+	<label> 
+		<div> Max quantity </div>
+		<input type="number" name="meal_quantity" value={{quantity_of_meal}} min="0">
+	</label>
+	<div style="color: red">{{error_quantity}}</div>
+	<br>
+		
+	<label>Ingredients</label>
+	<table style="font-size: 20px;">
+	{% for ingredient in ingredients_list%}
+	
+		{% if forloop.counter0|divisibleby:4 %}
+		<tr>
+		{% endif %}
+		<td>
+			<input type="checkbox" id ="{{ingredient}}" name="meal_ingredients" value="{{ingredient}}">{{ingredient}}
+		</td>
+		{% if forloop.counter|divisibleby:4 %}
+		</tr>
+		{% endif %}
+		
+	
+		
+		
+		
+	{% endfor %}
+	</table>
+	<div style="color: red">{{error_ingredients}}</div>	
+	<br>
+	<br>
+	<label>Select image files</label>
+	<input type="file" name="food_img1" style="font-size: 20px;">
+	<br>	
+	<input type="file" name="food_img5" style="font-size: 20px;">	
+	<br>			
+	<br>
+	<label style="font-size: 15px;">The final meal should match the phot. Otherwise,
+		the buyer can refuse to pay!</label>
+	<br>
+	<div style="color: red">{{error_image}}</div>			
+		
+	<br>
+	<input type="submit">
+</form>
+-->

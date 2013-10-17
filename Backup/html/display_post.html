@@ -1,0 +1,156 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+    
+
+    
+    
+    <div class="container marketing" style="margin-left:15%;">
+        <div style="margin:150px auto 50px auto;">            
+            <h1 style="font-family: fantasy; font-size: 3em;width:100%;margin-left: 250px;">{{food.0}}</h1>	    
+        </div>
+        <div class="row" style="float: left;width:28%;padding-right: 100px;">
+            
+                <table class="table" style="font-family:fantasy; font-size: 2em;height:430px">
+                    <col width="200px">
+                    <col width="150px">
+                    <tr>
+                        
+                        <td  style="vertical-align: middle;">Price</td>
+                        <td  style="vertical-align: middle;">{{food.1}}</td>
+                        </span>
+                    </tr>
+                    <tr>
+                        <td  style="vertical-align: middle;">Date</td>
+                        <td  style="vertical-align: middle;">{{food.3}}</td>                
+                    </tr>
+                    <tr>
+                        <td  style="vertical-align: middle;">Chef</td>
+                        <td  style="vertical-align: middle;"><a href="./_chef?u={{chef_name}}">{{chef_name}}</a></td>                
+                    </tr>
+                    <tr>
+                        <td  style="vertical-align: middle;">Chef Rating</td>
+                        <td  style="vertical-align: middle;">{{chef_rate|safe}}</td>                
+                    </tr>
+                    <tr>
+                        <td  style="vertical-align: middle;">No. left?</td>
+                        <td  style="vertical-align: middle;">{{meal_left}}</td>                
+                    </tr>    
+                </table>
+                <button type="submit" class="btn btn-primary btn-large" style="width:100%;
+                margin-bottom:20px;text-align: center;font-size: 2em;
+                border-radius: 4px;">
+                    Order now!
+                </button>
+            
+        </div>
+        
+        
+        <!-- ======================================================= -->
+        <!-- Carousel
+        ================================================== -->
+        <div class="row" style="width:68%;float: left;">
+            <div id="myCarousel" class="carousel slide" >
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    {% for img_no in img_number_list%}
+                        {% if not forloop.counter0%}
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        {% else %}
+                            <li data-target="#myCarousel" data-slide-to="{{img_no}}"></li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                    {% for img_no in img_number_list%}
+                        {% if not forloop.counter0%}
+                        <div class="item active">
+                        {% else %}
+                        <div class="item ">
+                        {% endif %}        
+                            <img src="/_image?k={{key}}&n={{img_no}}" >
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if img_number_list|length > 1 %}
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                {%endif%}
+            </div><!-- /.carousel -->
+        </div>
+    </div>
+<div class="container marketing" style="margin-left:15%;width:1200px;">
+      <div class="row">
+        <p class="lead" style="text-align: justify;">{{food_description}}</p>
+      </div>
+</div>
+    
+    
+    
+    
+    <!-- SlidesJS Required: Link to jQuery -->
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <!-- End SlidesJS Required -->
+
+  <!-- SlidesJS Required: Link to jquery.slides.js -->
+  <script src="./js/jquery.slides.min.js"></script>
+  <!-- End SlidesJS Required -->
+
+  <!-- SlidesJS Required: Initialize SlidesJS with a jQuery doc ready -->
+  <script>
+    $(function() {
+      $('#slides').slidesjs({
+        width: 940,
+        height: 528,
+        navigation: false
+      });
+    });
+  </script>
+  <!-- End SlidesJS Required -->
+      
+    
+  </body>
+</html>
+{% endblock %}>
+
+<!-- OLD VERSION -->
+<!--
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/display_post_style.css">
+</head>
+
+<div class = edit_placeholder> <a href='/newquote'> New Quote</a>| <a href='/_allquotes?u={{userid}}'>My Quotes!</a> | <a href='/_edit_profile?p={{userid}}'> Change preferences </a> 
+</div>
+
+<div> <h2> Chef {{chef_name}} </h2> </div>
+<hr>
+<br>
+<label style="color:black;left: 8px;position:absolute; top:180px; font-size:25;">		    
+    Title
+</label>
+<label style="color:black;left: 300px;position:absolute; top:180px;font-size:25;">		    
+    Price
+</label>
+<label style="color:black;position:absolute;top:180px;left: 600px;font-size:25;">		    
+    Will be ready for
+</label>
+
+<div class = food_title>		    
+    {{food.0}}
+</div>
+<div class = food_price>
+    {{food.1}}    
+</div>
+<div class = food_date>
+    {{food.3}}    
+</div>
+<br>
+<br>
+        
+{% for img_no in img_number_list%}
+ <img src='/_image?k={{key}}&n={{img_no}}' height="150" width="200"></img>
+
+{% endfor %}
+
+-->

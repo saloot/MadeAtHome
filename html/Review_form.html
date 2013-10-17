@@ -1,0 +1,32 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/search_results_style.css">
+</head>
+
+<form method="post">
+
+    
+	<h1>Review</h1>
+	<br>
+
+	<div class="wrapper">	
+		<input type="radio" name="rating_button" id="star-1" class="rating_radio" value="5"><label for="star-1" class="rating_label"></label>
+		<input type="radio" name="rating_button" id="star-2" class="rating_radio" value="4"><label for="star-2" class="rating_label"></label>
+		<input type="radio" name="rating_button" id="star-3" class="rating_radio" value="3"><label for="star-3" class="rating_label"></label>
+		<input type="radio" name="rating_button" id="star-4" class="rating_radio" value="2"><label for="star-4" class="rating_label"></label>
+		<input type="radio" name="rating_button" id="star-5" class="rating_radio" value="1"><label for="star-5" class="rating_label"></label>	
+	</div>
+	
+	<div style="color: red">{{error_rating}}</div>
+	<br>	
+	<label>	
+	<div> Comments (optional)</div>
+	 <textarea name="comments">{{comments_value}}</textarea>
+	</label>
+	<div style="color: red">{{error_comments}}</div>	
+	
+	<br>
+	<br>
+	<input type="submit">
+</form>
+

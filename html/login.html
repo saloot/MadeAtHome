@@ -1,0 +1,117 @@
+
+{% extends "base_page.html" %}
+
+{% block content %}
+<div class="span6" style="padding-right:20px; border-right: 1px solid #ccc;margin-left: 200px;margin-bottom: 100px;">
+	<div class="container marketing" style="margin-top:80px;">
+		<h3 style="font-family: fantasy;margin-left:60px;margin-bottom: 40px;">Already a user? Sign in mate!</h3>
+		<form class="form-horizontal" method="post">
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Username</label>
+				<div class="controls">
+					<input type="text" name="username" id="inputEmail" placeholder="Username" value="{{username_value}}">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_username}}</label>
+				</div>
+				
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Password</label>
+				<div class="controls">
+					<input type="password" name="password" id="inputPassword" placeholder="Password">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_password}}</label>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<label class="checkbox">
+						<input type="checkbox" name="remember_me_box" value="{{check_box_val}}"> Remember me
+					</label>
+					<button type="submit" class="btn btn-primary" style="width:100px;font-size:20px;height:40px;">Sign in</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="span6" >
+	<div class="container marketing" style="margin-top:80px;margin-bottom: 100px;">
+	<h3 style="font-family: fantasy;margin-left:60px;margin-bottom: 40px;">Not a user yet?Signup!</h3>
+		<form class="form-horizontal" method="post" action="signup?u=user" style="margin-top: -20px;">
+			<div class="control-group">
+				<label class="control-label" for="inputEmail">Select a Username</label>
+				<div class="controls">
+					<input type="text" name="username" id="inputEmail" placeholder="Username" value="{{username_value_signup}}">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_username_signup}}</label>
+					
+				</div>
+				
+				
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Password</label>
+				<div class="controls">
+					<input type="password" name="password" id="inputPassword" placeholder="Password">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_password_signup}}</label>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="inputPassword">Repeat password</label>
+				<div class="controls">
+					<input type="password" name="verify" id="inputPassword" placeholder="Password again">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_password_verify_signup}}</label>
+					
+				</div>
+				
+			</div>
+			<div class="control-group">
+				<div class="controls">
+					<input type="hidden" name="original_url" value="/login">
+					<button type="submit" class="btn btn-primary" style="width:100px;font-size:20px;height:40px;background-color:green;">Sign up</button>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+</div>
+
+<div>
+	</div>
+  </body>
+</html>
+{% endblock %}
+
+<!--- OLD VERSION <html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/login_style.css">
+</head>
+
+<form method="post">
+
+    
+	<h1> Login to your account</h1>
+	<br>
+
+	<label> 
+	<div> Username </div>
+	<input type="text" name="username" value={{username_value}}> 
+	</label>
+	<div style="color: red">{{error_username}}</div>
+	<br>	
+	<label>	
+	<div> Password </div>
+	<input type="password" name="password"> 
+	</label>
+	<div style="color: red">{{error_password}}</div>
+	<br>
+	<input type="checkbox" name="remember_me_box" {{check_box_val}}> Remember me!
+	
+	<br>
+	<br>
+	<input type="submit">
+</form>
+
+<br>
+<br>
+Don't have an account? click <a href= "/signup"> here!<a>
+-->

@@ -1,0 +1,37 @@
+<style type="text/css">
+    body{
+      font-family:sans-serif;
+      width: 800px;
+      font-size:20;
+      margin: 0 auto;
+      padding: 10px;
+    }
+    label{
+      display: block;
+      font-size:20px;
+      }
+      input[type=text]{
+          width:400px;
+          font-size:20px;
+          padding:2px;          
+      }
+      input[type=password]{
+          width:400px;
+          font-size:20px;
+          padding:2px;          
+      }
+      textarea{
+          width:400px;
+          height:300px;
+          font-size:17px;
+          font-family:monospace;
+          }
+       input[type=submit]{
+          font-size:20;
+       }
+       .post-heading{
+           position: relative;
+           border-bottom: 4px solid #666;
+           }
+
+    </style>

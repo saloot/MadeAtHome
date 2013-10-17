@@ -1,0 +1,47 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/profile_style.css">
+</head>
+
+<div class = edit_placeholder> <a href='/newquote'> New Quote</a>| <a href='/_allquotes?u={{userid}}'>My Quotes!</a> | <a href='/_edit_profile?p={{userid}}'> Change preferences </a> 
+</div>
+
+
+
+<div> <h2> Chef {{chef_name}} </h2> </div>
+<hr>
+<div> <h3> Our offers are: </h3> </div>
+
+{% for food in food_list%}
+{% if not forloop.counter0%}
+<label style="color:black;left: 8px;position:absolute; top:140px; font-size:25;">		    
+    Title
+</label>
+<label style="color:black;left: 300px;position:absolute; top:140px;font-size:25;">		    
+    Price
+</label>
+<label style="color:black;position:absolute;top:140px;left: 600px;font-size:25;">		    
+    Will be ready for
+</label>
+{% endif %}
+<div class = food_title>		    
+    <a href="./_meal?m={{food.4}}">{{food.0}}</a>
+</div>
+<div class = food_price>
+    {{food.1}}    
+</div>
+<div class = food_date>
+    {{food.3}}    
+</div>
+<div class = food_picture>
+    <a href="./_meal?m={{food.4}}">
+        <img src='/_image?k={{food.4}}&n=1' height="100" width="100"></img>
+    </a>
+</div>
+<hr>
+{% endfor %}
+
+<div class = display_quote> {{quote}} </div>
+<div class = display_whosaid> {{whosaid}} </div>
+
+

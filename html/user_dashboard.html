@@ -1,0 +1,149 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+
+
+<div style="width:500px; margin:150px auto 50px auto;">            
+    <h1 style="font-family: fantasy; font-size: 3em;">Chef {{chef_id}}'s Menu</h1>
+    <h2 style="font-family: fantasy; font-size: 2em;">Chef's rating {{chef_rating|safe}} <span style="font-size: .5em">(based on <a href="/reviews/_chef?u=saloot"> {{no_reviews}} Reviews </a>)</span></h2>
+</div>
+
+<div class="container marketing">
+      <div class="row">
+<table class="table table-striped" style="font-family:fantasy; font-size: 2em;">
+    <tr style="height:70px;">
+        <td style="vertical-align: middle;">Title</td>
+        <td style="vertical-align: middle;">Price</td>
+        <td style="vertical-align: middle;">Will be ready for</td>
+        <td style="vertical-align: middle;"> Pix</td>
+    </tr>    
+    
+    {% for food in food_list%}
+    <tr>
+        <td style="vertical-align: middle;"><a href="./_meal?m={{food.4}}">{{food.0}}</a></td>
+        <td style="vertical-align: middle;">{{food.1}}</td>
+        <td style="vertical-align: middle;">{{food.3}}</td>
+        <td style="vertical-align: middle;">
+            <a href="./_meal?m={{food.4}}">
+                <img src='/_image?k={{food.4}}&n=1' height="100" width="100"></img>
+            </a>
+        </td>
+    </tr>
+
+{% endfor %}
+</table>
+      </div>
+
+
+
+
+  </body>
+</html>
+{% endblock %}
+<!-- OLD VERSION
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/search_results_style.css">
+</head>
+
+<div class = edit_placeholder> <a href='/newquote'> New Quote</a>| <a href='/_allquotes?u={{userid}}'>My Quotes!</a> | <a href='/_edit_profile?p={{userid}}'> Change preferences </a> 
+</div>
+
+
+
+<div> <h4>  {{error_name}} </h4> </div>
+<hr>
+
+{% for food in food_list%}
+{% if not forloop.counter0%}
+<div> <h3> Our offers are: </h3> </div>
+<label style="color:black;left: 8px;position:absolute; top:100px; font-size:25;">		    
+    Title
+</label>
+<label style="color:black;left: 300px;position:absolute; top:100px;font-size:25;">		    
+    Price
+</label>
+<label style="color:black;position:absolute;top:100px;left: 600px;font-size:25;">		    
+    Will be ready for
+</label>
+<label style="color:black;position:absolute;top:100px;left: 960px;font-size:25;">		    
+    By chef
+</label>
+{% endif %}
+<div class = food_title>		    
+    <a href="./_meal?m={{food.4}}">{{food.0}}</a>
+</div>
+<div class = food_price>
+    {{food.1}}    
+</div>
+<div class = food_date>
+    {{food.3}}    
+</div>
+<div class = food_chef>
+   <a href="./_chef?u={{food.5}}">{{food.5}}</a>
+</div>
+<div class = food_chef_rating>
+    {{food.6|safe}}
+</div>
+<div class = food_picture>
+    <a href="./_meal?m={{food.4}}">
+        <img src='/_image?k={{food.4}}&n=1' height="100" width="100"></img>
+    </a>
+</div>
+<hr>
+{% endfor %}
+
+</html>
+
+-->
+
+
+<!-- OLDER VERSION <html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/profile_style.css">
+</head>
+
+<div class = edit_placeholder> <a href='/newquote'> New Quote</a>| <a href='/_allquotes?u={{userid}}'>My Quotes!</a> | <a href='/_edit_profile?p={{userid}}'> Change preferences </a> 
+</div>
+
+
+
+<div> <h2> Chef {{chef_name}} </h2> </div>
+<hr>
+<div> <h3> Our offers are: </h3> </div>
+
+{% for food in food_list%}
+{% if not forloop.counter0%}
+<label style="color:black;left: 8px;position:absolute; top:140px; font-size:25;">		    
+    Title
+</label>
+<label style="color:black;left: 300px;position:absolute; top:140px;font-size:25;">		    
+    Price
+</label>
+<label style="color:black;position:absolute;top:140px;left: 600px;font-size:25;">		    
+    Will be ready for
+</label>
+{% endif %}
+<div class = food_title>		    
+    <a href="./_meal?m={{food.4}}">{{food.0}}</a>
+</div>
+<div class = food_price>
+    {{food.1}}    
+</div>
+<div class = food_date>
+    {{food.3}}    
+</div>
+<div class = food_picture>
+    <a href="./_meal?m={{food.4}}">
+        <img src='/_image?k={{food.4}}&n=1' height="100" width="100"></img>
+    </a>
+</div>
+<hr>
+{% endfor %}
+
+<div class = display_quote> {{quote}} </div>
+<div class = display_whosaid> {{whosaid}} </div>
+
+
+-->

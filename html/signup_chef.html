@@ -1,0 +1,84 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+<div class="container marketing" style="margin-top:80px;">
+	<div class="span6" style="padding-right:-20px; margin-bottom: 100px;">	
+		<h3 style="font-family: fantasy;margin-left:60px;margin-bottom: 40px;">Join us and sell on Made@Home!</h3>
+		<form class="form-horizontal" method="post">
+			
+			<div class="control-group" style="height:30px;">
+				<label class="control-label" for="first_name_input">First name</label>
+				<div class="controls">
+					<input type="text" name="first_name" id="first_name_input" placeholder="First name" value="{{first_name_value}}">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_first_name}}</label>
+				</div>
+				
+			</div>
+			<div class="control-group" style="height:30px;">
+				<label class="control-label" for="last_name_input">Last name</label>
+				<div class="controls" >
+					<input type="text" name="last_name" id="last_name_input" placeholder="Last name" value="{{last_name_value}}">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_last_name}}</label>
+				</div>
+				
+			</div>
+			<div class="control-group" style="height:30px;">
+				<label class="control-label" for="postAddress">Address</label>
+				<div class="controls">
+					<input type="text" name="postal_address" id="postAddress" placeholder="Postall address" value="{{postal_address_value}}">
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_postal_address}}</label>
+				</div>
+				
+			</div>
+			<div class="control-group" style="height:30px;">
+				<label class="control-label" for="inputEmail">Email</label>
+				<div class="controls">
+					<input type="text" name="email" id="inputEmail" placeholder="user@example.com" value={{email_value}}>
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_email}}</label>
+				</div>
+			</div>
+			
+			<div class="control-group" style="height:30px;">
+				<label class="control-label" for="inputPhone">Cellphone</label>
+				<div class="controls">
+					<input type="text" name="cellphone" id="inputPhone" placeholder="+41216938137" value={{cell_phone}}>
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_cellphone}}</label>
+				</div>
+			</div>
+			
+			<div class="control-group" style="height:30px;">
+				<label class="control-label" for="inputPaypal">Paypal address</label>
+				<div class="controls">
+					<input type="text" name="paypl" id="inputPaypal" placeholder="Paypal username" value={{paypal_email}}>
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_paypal}}</label>
+				</div>
+			</div>
+			
+			<div class="control-group" style="height:30px;">
+				<label class="control-label" for="inputRestaurant">Restaurant name</label>
+				<div class="controls">
+					<input type="text" name="restaraunt" id="inputRestaurant" placeholder="Restaurant" value={{restaraunt_value}}>
+					<label style="display: inline-block;color:red;margin-left:5px;font-size:16px;">{{error_restaraunt}}</label>
+				</div>
+			</div>
+			
+			<div class="control-group" style="height:30px;">
+				<div class="controls">
+					<label class="checkbox">
+						<input type="checkbox" name="remember_me_box" value="{{check_box_val}}"> Remember me
+					</label>
+					<button type="submit" class="btn btn-primary" style="width:100px;font-size:20px;height:40px;">Sign in</button>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+
+
+	<div class="span5" style="margin-bottom: 100px;">	
+		<h3 style="font-family: fantasy;margin-left:100px;margin-bottom: 40px;">Here is how it works!</h3>
+		<iframe style="border-radius: 15px;" width="520" height="325" src="//www.youtube.com/embed/YJSoEbNxYKE" frameborder="0" allowfullscreen ></iframe>
+	</div>
+</div>	
+
+{% endblock %}

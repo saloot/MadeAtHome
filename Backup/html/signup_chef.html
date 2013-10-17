@@ -1,0 +1,66 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/signup_style.css">
+</head>
+
+<form method="post">
+
+	<h1> Registration form </h1>
+	<br>
+	<label> 
+	<div> First name </div>
+	<input type="text" name="first_name" value={{first_name_value}}> 
+	</label>
+	<div style="color: red">{{error_first_name}}</div>
+	<br>	
+	<label> 
+	<div> Last name </div>
+	<input type="text" name="last_name" value={{last_name_value}}> 
+	</label>
+	<div style="color: red">{{error_last_name}}</div>
+	<br>	
+	<label> 
+	<label> 
+	<div> Address </div>
+	<input type="text" name="postal_address" value={{postal_address_value}}> 
+	</label>
+	<div style="color: red">{{error_postal_address}}</div>
+	<br>
+	<div> Cellphone </div>
+	<input type="text" name="cellphone" value={{cell_phone}}> 
+	</label>
+	<div style="color: red">{{error_cellphone}}</div>
+	<br>	
+	<div> User name </div>
+	<input type="text" name="username" value={{username_value}}> 
+	</label>
+	<div style="color: red">{{error_username}}</div>
+	<br>	
+	<label>	
+	<div>Password </div>
+	<input type="password" name="password"> 
+	</label>
+	<div style="color: red">{{error_password}}</div>
+	<br>
+	<label>
+	<div> Verify your password </div>
+	<input type="password" name="verify"> 
+	</label>
+	<div style="color: red">{{error_password_verify}}</div>
+	<br>
+	<label> 
+	<div> Email </div>
+	<input type="text" name="email" value={{email_value}}> 
+	</label>
+	<div style="color: red">{{error_email}}</div>
+	<br>
+	<div> Paypal address </div>
+	<input type="text" name="paypl" value={{paypal_email}}> 
+	</label>
+	<div style="color: red">{{error_paypal_email}}</div>
+	<br>
+	
+	
+	<input type="submit">
+</form>
+

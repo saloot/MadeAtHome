@@ -1,0 +1,49 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/profile_style.css">
+</head>
+
+<div class = edit_placeholder> <a href='/newquote'> New Quote</a>| <a href='/_allquotes?u={{userid}}'>My Quotes!</a> | <a href='/_edit_profile?p={{userid}}'> Change preferences </a> 
+</div>
+
+
+
+<div> <h4>  {{error_name}} </h4> </div>
+<hr>
+
+{% for food in food_list%}
+{% if not forloop.counter0%}
+<div> <h3> Our offers are: </h3> </div>
+<label style="color:black;left: 8px;position:absolute; top:140px; font-size:25;">		    
+    Title
+</label>
+<label style="color:black;left: 300px;position:absolute; top:140px;font-size:25;">		    
+    Price
+</label>
+<label style="color:black;position:absolute;top:140px;left: 600px;font-size:25;">		    
+    Will be ready for
+</label>
+<label style="color:black;position:absolute;top:100px;left: 800px;font-size:25;">		    
+    By chef
+</label>
+<label style="color:black;position:absolute;top:100px;left: 1000px;font-size:25;">		    
+    By chef
+</label>
+{% endif %}
+<div class = food_title>		    
+    {{food.0}}
+</div>
+<div class = food_price>
+    {{food.1}}    
+</div>
+<div class = food_date>
+    {{food.3}}    
+</div>
+
+<div class = food_picture>
+    <img src='/_image?k={{food.4}}&n=1'></img>
+</div>
+{% endfor %}
+
+</html>
+

@@ -1,0 +1,29 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/login_style.css">
+</head>
+
+<form method="post">
+
+    
+	<h1> Add ingredients or food names</h1>
+	<br>
+
+	<label> 
+	<div> Ingredient name </div>
+	<input type="text" name="ingredient_name" value={{ingredient_value}}> 
+	</label>
+	<div style="color: red">{{error_ingredient}}</div>
+	<br>	
+	<label>	
+	<div> Food name </div>
+	<input type="text" name="food_name"> 
+	</label>
+	<div style="color: red">{{error_food}}</div>
+	<br>
+	<br>
+	<input type="submit">
+</form>
+
+<br>
+<br>

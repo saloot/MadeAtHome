@@ -1,0 +1,46 @@
+
+<style type="text/css">
+    body{
+      background-color:yellow;
+    }
+    div{
+      border-radius: 10px;      
+      display: inline-block;
+      font-size: 60px;
+      font-family: sans-serif;
+      margin:auto;
+      margin-top: 5px;
+      padding: 4px;
+      width: 360px;
+      height:80px;
+      /*vertical-align: middle;*/
+      text-align: center;
+      }
+    #chef_signup{
+      position:absolute;
+      background-color: #3399FF;
+      margin-left:300px;
+      margin-top:200px;
+      border: #0033CC;
+    }
+    #user_signup{
+      position:absolute;
+      background-color: #FF8000;
+      margin-left:900px;
+      margin-top:200px;
+      
+    }
+    a{
+      text-decoration: none;
+    }
+    #chef_signup_link{
+      color:#FFFFFF;
+    }
+    
+    #user_signup_link{
+      color:#0B173B;
+    }
+    
+</style>
+    
+	
