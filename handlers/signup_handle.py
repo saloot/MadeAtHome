@@ -60,7 +60,8 @@ class SignUpHandler(webapp2.RequestHandler):
             self.response.headers.add_header('Set-Cookie','user_id=%s' % str(hashed_val))
             q = UserPass_User(user_id = user_name.lower(),user_pass = make_hashed_pw(user_name.lower(),
             user_password),ischef=0,user_bonus=0)
-            q.put()                                            
+            q.put()
+            time.sleep(2)
             self.redirect('/welcome')
         else:
                 self.response.out.write(template.render('./html/login.html',signup_templ_params))

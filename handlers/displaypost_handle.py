@@ -1,3 +1,11 @@
+#=================================FUNCTION DESCRITION================================
+# This code is responsible for displaying a particular meal. It reads the meal ID
+# from the url, retrieves the meal from the dataset and if found, displays its
+# detaiLs.
+#====================================================================================
+
+
+#=================INCLUDING THE NECESSARY LIBRARIES AND OTHER FILES==================
 import webapp2
 from google.appengine.api import memcache
 from google.appengine.ext import db
@@ -5,7 +13,9 @@ import time
 from dbs.databases import *
 from utils import *
 from google.appengine.ext.webapp import template
+#====================================================================================
 
+#===================================THE MAIN CODE====================================
 class DisplayPostHandler(webapp2.RequestHandler):
     def get(self):   
         meal_key = self.request.get('m')
@@ -69,6 +79,11 @@ class DisplayPostHandler(webapp2.RequestHandler):
         last_chached = memcache.get(key_time)
         #if last_chached:
         #    self.response.write('Queried %f seconds ago' %(time.time()-last_chached))
+#====================================================================================
+
+#===============================THE JASON HANDLER====================================
+# The JSON handler is responsible for producing proper JSON values, necessary for RSS
+# feeds, APIs and so on.
 
 class DisplayPostHandler_JSON(webapp2.RequestHandler):
     def get(self,meal_key):             
@@ -78,5 +93,5 @@ class DisplayPostHandler_JSON(webapp2.RequestHandler):
         
         post_dictionary = print_json(self,meal)
         self.response.out.write(json.dumps(post_dictionary))
-
+#====================================================================================
 

@@ -39,6 +39,7 @@ from handlers.displaymap_handle import DisplayMapHandler
 from handlers.admin_handle import AdminHandler
 from handlers.image_handle import ImageHandler
 from handlers.review_handle import ReviewHandler
+from handlers.search_handle import SearchHandler
 from utils import *
 
 from time import gmtime, strftime
@@ -105,7 +106,7 @@ class MainHandler(webapp2.RequestHandler):
         #min_chef_rate = int(self.request.get('min_rate'))
         
         
-
+        
         
         success_flag = 1
         
@@ -155,69 +156,9 @@ class MainHandler(webapp2.RequestHandler):
             #params_front['food_list'] = food_list
             self.response.out.write(template.render('./html/front_page.html',params_front))
         else:
-            delivery_date = datetime.strptime(str(delivery_date), "%Y-%m-%dT%H:%M")
-            meal_query = "SELECT * FROM FoodList WHERE offered_date > DATETIME('%s')" %delivery_date
-            
-            meals_list = db.GqlQuery(meal_query)
-            if meals_list is not None:
-                
-                success_flag = 0
-                for meal in meals_list:
-                    
-                #    if meal.price <= max_price:
-                #        success_flag_temp = 1
-                        
-                #        if not min_chef_rate:
-                #            min_chef_rate = 0
-                            
-                    chefs = db.GqlQuery("SELECT * FROM UserPass_Chef WHERE user_id = '%s'" %meal.chef_id)
-                    chef = chefs.get()
-                            
-                #        if chef.user_rating < min_chef_rate:
-                #            success_flag_temp = 0
-                        
-                    
-                #        if success_flag_temp:
-                #            success_flag_temp = 0
-                    
-                    for desired_title in selected_meals:                        
-                        if meal.meal_type == str(desired_title):
-                            
-                            meal_specifications = []                    
-                            meal_specifications.append(unescape_html(meal.title))
-                            meal_specifications.append(int(meal.price))
-                            meal_specifications.append(int(meal.max_quantity))                                    
-                            meal_specifications.append((meal.offered_date))
-                            meal_specifications.append((meal.key()))
-                            meal_specifications.append(str(meal.chef_id))
-                                    
-                            rating_str = ""
-                            
-                            for i in range(int(chef.user_rating)):
-                                rating_str = rating_str + "<span>&#9733</span>"
-                            for i in range(5-int(chef.user_rating)):    
-                                rating_str = rating_str + "<span>&#9734</span>"
-                                        
-                            meal_specifications.append(rating_str)
-                            search_results.append(meal_specifications)
-                            success_flag = 1
-                            break
-                            
-                if not success_flag:
-                    self.response.out.write('Sorry your query did not yield any results!')
-                else:
-                    params_front['food_list'] = search_results
-                    params_front['isactive'] = "1"
-                    temp = self.request.cookies.get('user_id')
-                    if temp:
-                        userid = valid_hash_cookie(temp)
-                        if userid:
-                            params_front['userid'] = userid
-                    self.response.out.write(template.render('./html/display_search_results.html',params_front))        
-            else:
-                self.response.out.write('Sorry your query did not yield any results!')
-                        
-                    
+            delivery_date = datetime.strptime(str(delivery_date), "%Y-%m-%dT%H:%M")            
+            self.redirect('/_search?u=%s&v=%s&s=normal'%(','.join(selected_meals),delivery_date) )
+                                
 
                      
                     
@@ -270,5 +211,6 @@ app = webapp2.WSGIApplication([
     ('/display_map/?', DisplayMapHandler),    
     ('/_meal', DisplayPostHandler),
     ('/_rev', ReviewHandler),
+    ('/_search',SearchHandler),
     ('/([a-zA-Z0-9]+.json)/?', DisplayPostHandler_JSON)
 ], debug=True)

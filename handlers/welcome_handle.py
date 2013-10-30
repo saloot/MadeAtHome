@@ -13,10 +13,13 @@ class WelcomeHandler(webapp2.RequestHandler):
                 
                 d = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s' " % userid)
                 l = d.get()
-                if (l.ischef):
-                    chef_flag = 1
+                if l:
+                    if (l.ischef):
+                        chef_flag = 1
+                    else:
+                        chef_flag = 0
                 else:
-                    chef_flag = 0
+                    self.display.out.write('Error! No username!')
                     
                 dashboard_params['userid'] = userid
                 dashboard_params['chef_flag'] = chef_flag
