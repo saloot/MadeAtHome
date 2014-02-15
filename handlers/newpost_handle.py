@@ -41,6 +41,10 @@ class NewPostHandler(webapp2.RequestHandler):
             userid = valid_hash_cookie(temp)
             if userid:
                 params_new_post['userid'] = userid
+                user = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s'" %userid)
+                user = user.get()
+                params_new_post['chef_flag'] = user.ischef
+                
         params_new_post['food_types_list'] = food_types_list
         params_new_post['isactive'] = ["active","0","0"]
         
@@ -49,9 +53,11 @@ class NewPostHandler(webapp2.RequestHandler):
     def post(self): 
         params_new_post = {}  
         meal_title = escape_html(self.request.get('meal_desired_title'))
+        meal_promotion = escape_html(self.request.get('promotion_of_meal'))
         type_of_meal = str(escape_html(self.request.get('meal_type')))
         meal_quantity = self.request.get('meal_quantity')
-        meal_date = self.request.get('meal_date')
+        meal_date_begin = self.request.get('meal_date_begin')
+        meal_date_finish = self.request.get('meal_date_finish')
         meal_price = (self.request.get('meal_price'))
         image1 = str(self.request.get('food_img1'))
         image1 = db.Blob(image1)
@@ -88,15 +94,15 @@ class NewPostHandler(webapp2.RequestHandler):
                 food_types_list.append(food.title)
         
         params_new_post['food_types_list'] = food_types_list
-        params_new_post['description_meal'] = meal_description
-        params_new_post['customized_meal_title'] = meal_title
+        params_new_post['description_meal'] = unescape_html(meal_description)
+        params_new_post['customized_meal_title'] = unescape_html((meal_title))
         
         if not meal_title:
             params_new_post['error_title'] = "Title is necessary!"
             params_new_post['title_of_meal'] = ''
             success_flag = 0
         else:
-            params_new_post['title_of_meal'] = meal_title
+            params_new_post['title_of_meal'] = unescape_html(meal_title)
             
         if not meal_ingredients_list:
             success_flag = 0
@@ -105,13 +111,28 @@ class NewPostHandler(webapp2.RequestHandler):
         else:
             params_new_post['ingredients_of_meal'] = meal_ingredients_list            
         
-        if not meal_date:
-            params_new_post['error_date'] = "Date is necessary!"
-            params_new_post['date_of_meal'] = ''
+        if not meal_date_begin:
+            params_new_post['error_date_begin'] = "Date is necessary!"
+            params_new_post['date_of_meal_begin'] = ''
             success_flag = 0
         else:
-            meal_date_pyth = datetime.strptime(meal_date, "%Y-%m-%dT%H:%M")
-            params_new_post['date_of_meal'] = meal_date
+            meal_date_pyth_begin = datetime.strptime(meal_date_begin, "%Y-%m-%dT%H:%M")
+            params_new_post['date_of_meal_begin'] = meal_date_begin
+            
+        if not meal_date_finish:
+            params_new_post['error_date_finish'] = "Date is necessary!"
+            params_new_post['date_of_meal_finish'] = ''
+            success_flag = 0
+        else:
+            meal_date_pyth_finish = datetime.strptime(meal_date_finish, "%Y-%m-%dT%H:%M")
+            if (meal_date_pyth_finish < meal_date_pyth_begin):
+                success_flag = 0
+                params_new_post['error_date_finish'] = "end date should be bigger than the start date!"
+                params_new_post['date_of_meal_finish'] = ''
+            else:
+                params_new_post['date_of_meal_finish'] = meal_date_begin
+            
+        
             
         if not meal_quantity:
             params_new_post['error_quantity'] = "Quantity is necessary!"
@@ -131,9 +152,15 @@ class NewPostHandler(webapp2.RequestHandler):
             params_new_post['error_image'] = 'You should submit at least one picture!'
             success_flag = 0
         
-        if not meal_description:
-            params_new_post['error_description'] = 'Due you should write something to describe the fucking meal!!'
+        
+        params_new_post['meal_promotion'] = unescape_html(meal_promotion)
+        
+        if not meal_title:
+            params_new_post['error_title'] = "Title is necessary!"
+            params_new_post['title_of_meal'] = ''
             success_flag = 0
+        else:
+            params_new_post['title_of_meal'] = meal_title
             
         if not success_flag:            
             self.response.out.write(template.render('./html/new_post.html',params_new_post))
@@ -150,10 +177,10 @@ class NewPostHandler(webapp2.RequestHandler):
             chef = u.get()
             
             b = FoodList(title = meal_title,ingredients = meal_ingredients_list,created_date = datetime.now(),
-                         offered_date = meal_date_pyth,chef_id = chef_id,max_quantity = int(meal_quantity),
+                         offered_date_begin = meal_date_pyth_begin,offered_date_finish = meal_date_pyth_finish,chef_id = chef_id,max_quantity = int(meal_quantity),
                          chef_firstname = chef.user_firstname,chef_lastname = chef.user_lastname,
                          chef_address = chef.user_address,chef_email = chef.user_email,chef_phone = chef.user_phone,
-                         chef_latitude = chef.user_latitude,chef_longitude = chef.user_longitude,
+                         chef_latitude = chef.user_latitude,chef_longitude = chef.user_longitude,meal_promotion_msg = meal_promotion,
                          chef_bankacnt = chef.user_bankacnt, price = meal_price, food_image1 = image1,
                          food_image2 = image2,food_image3 = image3,food_image4 = image4,food_image5 = image5, description = meal_description, meal_type = type_of_meal)
             b.put()

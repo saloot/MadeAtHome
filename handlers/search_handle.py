@@ -47,10 +47,16 @@ class SearchHandler(webapp2.RequestHandler):
         
         selected_meals = unescape_html(self.request.get('u'))
         delivery_date = unescape_html(self.request.get('v'))
+        hashed_val = escape_html(self.request.get('v'))
+        hashed_val.replace('&nbsp','aa')
+        hashed_val.replace('%20','aa')
+        
+        self.response.headers.add_header('Set-Cookie','delivery_date=%s' % str(hashed_val))
+        
         sort_option = unescape_html(self.request.get('s'))
         base_query = '?u=%s&v=%s' %(selected_meals,delivery_date)
         selected_meals= selected_meals.split(',')
-        meal_query = "SELECT * FROM FoodList WHERE offered_date > DATETIME('%s')" %delivery_date
+        meal_query = "SELECT * FROM FoodList WHERE offered_date_begin < DATETIME('%s')" %delivery_date
         meals_list = db.GqlQuery(meal_query)
         
         if meals_list is not None:
@@ -77,26 +83,27 @@ class SearchHandler(webapp2.RequestHandler):
                 for desired_title in selected_meals:
                     
                     if meal.meal_type == str(desired_title):
-                        
-                        meal_specifications = []                    
-                        meal_specifications.append(unescape_html(meal.title))
-                        meal_specifications.append(int(meal.price))
-                        meal_specifications.append(int(meal.max_quantity))                                    
-                        meal_specifications.append((meal.offered_date))
-                        meal_specifications.append((meal.key()))
-                        meal_specifications.append(str(meal.chef_id))
-                                    
-                        rating_str = ""
+                        if datetime.strptime(str(delivery_date), "%Y-%m-%d %H:%M:%S") < meal.offered_date_finish:
+                            meal_specifications = []                    
+                            meal_specifications.append(unescape_html(meal.title))
+                            meal_specifications.append(int(meal.price))
+                            meal_specifications.append(int(meal.max_quantity))                                    
+                            meal_specifications.append((meal.offered_date_begin.date()))
+                            meal_specifications.append((meal.key()))
+                            meal_specifications.append(str(meal.chef_id))
                             
-                        for i in range(int(chef.user_rating)):
-                            rating_str = rating_str + "<span>&#9733</span>"
-                        for i in range(5-int(chef.user_rating)):    
-                            rating_str = rating_str + "<span>&#9734</span>"
-                                        
-                        meal_specifications.append(rating_str)
-                        search_results.append(meal_specifications)
-                        success_flag = 1
-                        break
+                            rating_str = ""
+                                
+                            for i in range(int(chef.user_rating)):
+                                rating_str = rating_str + "<span>&#9733</span>"
+                            for i in range(5-int(chef.user_rating)):    
+                                rating_str = rating_str + "<span>&#9734</span>"
+                                            
+                            meal_specifications.append(rating_str)
+                            meal_specifications.append((meal.offered_date_finish.date()))
+                            search_results.append(meal_specifications)
+                            success_flag = 1
+                            break
                             
             if not success_flag:
                 self.response.out.write('Sorry your query did not yield any results!')
@@ -122,6 +129,9 @@ class SearchHandler(webapp2.RequestHandler):
                     userid = valid_hash_cookie(temp)
                     if userid:
                         params_front['userid'] = userid
+                        user = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s'" %userid)
+                        user = user.get()
+                        params_front['chef_flag'] = user.ischef
                 self.response.out.write(template.render('./html/display_search_results.html',params_front))        
         else:
             self.response.out.write('Sorry your query did not yield any results!')

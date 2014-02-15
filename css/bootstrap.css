@@ -4644,7 +4644,7 @@ body > .container.tabs-right.tabbable-bodered > .tab-content {
   overflow: visible;
   margin-bottom: 20px;
   *position: relative;
-  *z-index: 2;
+  *z-index: 2;  
 }
 .navbar-inner {
   min-height: 40px;

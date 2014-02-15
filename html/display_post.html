@@ -6,23 +6,30 @@
     
     
     <div class="container marketing" style="margin-left:15%;">
-        <div style="margin:150px auto 50px auto;">            
-            <h1 style="font-family: fantasy; font-size: 3em;width:100%;margin-left: 250px;">{{food.0}}</h1>	    
+        <div class="simpleCart_shelfItem">
+        <div style="margin:110px auto 50px auto;">            
+            <h1 style="font-family: fantasy; font-size: 3em;width:100%;margin-left: 250px;" class="item_name">{{food.0}}</h1>	    
         </div>
-        <div class="row" style="float: left;width:28%;padding-right: 100px;">
-            
-                <table class="table" style="font-family:fantasy; font-size: 2em;height:430px">
-                    <col width="200px">
-                    <col width="150px">
-                    <tr>
-                        
+        <div class="row" style="float: left;width:28%;padding-right: 100px;">                
+                <p hidden class="item_number">{{key}}</p>
+                <p hidden class="item_chef">{{chef_name}}</p>
+                <p hidden class="item_deliv">{{delivery_time}}</p>
+                
+                <table class="table" style="font-family:fantasy; font-size: 1.5em;height:430px">
+                    <col width="1060px">
+                    <col width="320px">
+                    <tr>                        
                         <td  style="vertical-align: middle;">Price</td>
-                        <td  style="vertical-align: middle;">{{food.1}}</td>
+                        <td  style="vertical-align: middle;" class="item_price">{{food.1}} CHF</td>
                         </span>
                     </tr>
                     <tr>
-                        <td  style="vertical-align: middle;">Date</td>
-                        <td  style="vertical-align: middle;">{{food.3}}</td>                
+                        <td  style="vertical-align: middle;">From</td>
+                        <td  style="vertical-align: middle;">{{food.3}}</td>                        
+                    </tr>
+                    <tr>
+                        <td  style="vertical-align: middle;">To</td>
+                        <td  style="vertical-align: middle;">{{food.4}}</td>
                     </tr>
                     <tr>
                         <td  style="vertical-align: middle;">Chef</td>
@@ -33,16 +40,45 @@
                         <td  style="vertical-align: middle;">{{chef_rate|safe}}</td>                
                     </tr>
                     <tr>
-                        <td  style="vertical-align: middle;">No. left?</td>
+                        <td  style="vertical-align: middle;">Number left?</td>
                         <td  style="vertical-align: middle;">{{meal_left}}</td>                
                     </tr>    
                 </table>
-                <button type="submit" class="btn btn-primary btn-large" style="width:100%;
-                margin-bottom:20px;text-align: center;font-size: 2em;
-                border-radius: 4px;">
-                    Order now!
-                </button>
-            
+                
+                <!--Paypal code
+                <form target="paypal" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" >
+                    <input type="hidden" name="cmd" value="_cart">
+                    <input type="hidden" name="business" value="hesam.salavati@epfl.ch">
+                    <input type="hidden" name="lc" value="CH">
+                    <input type="hidden" name="item_name" value="{{food.5}}">
+                    <input type="hidden" name="item_number" value="{{key}}">
+                    <input type="hidden" name="amount" value="{{food.1}}">
+                    <input type="hidden" name="currency_code" value="CHF">
+                    <input type="hidden" name="button_subtype" value="products">
+                    <input type="hidden" name="shipping" value="1.00">
+                    <input type="hidden" name="add" value="1">
+                    <input type="hidden" name="bn" value="PP-ShopCartBF:btn_cart_LG.gif:NonHosted">
+                    <input type="hidden" name="shopping_url" value="http://localhost:8083/_meal?m={{key}}">
+                    <input type="hidden" name="return" value="http://localhost:8083/_meal?m={{key}}">
+
+                    
+                    <!--
+                    <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/btn/btn_addtocart_120x26.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                   
+                </form>
+                -->
+                <input type="text" value="1" class="item_Quantity" style="width:30px;height:33px;text-align: center;font-size:1em;float:left;margin-right: 10px;">
+                <a class="item_add" href="javascript:;">                    
+                    <button type="submit" class="btn btn-primary btn-large" style="width:80%;
+                        margin-bottom:20px;text-align: center;font-size: 2em;
+                        border-radius: 4px;">
+                        Add to cart!
+                    </button>
+                </a>
+                
+
+        </div>
         </div>
         
         
@@ -107,7 +143,20 @@
     });
   </script>
   <!-- End SlidesJS Required -->
-      
+   
+  <script src="simpleCart.js"></script>
+    <script>
+      simpleCart({
+        checkout: {
+          type: "PayPal",
+          email: "hesam.salavati-facilitator@epfl.ch",
+          sandbox: true,
+          cancel: "http://madeatmyhome.appspot.com/_checkout",
+          success: "http://madeatmyhome.appspot.com/_paymentstatus"
+        }
+      });
+    </script>
+    
     
   </body>
 </html>

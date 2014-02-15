@@ -29,6 +29,9 @@ class ChefProfileHandler(webapp2.RequestHandler):
             userid = valid_hash_cookie(temp)
             if userid:
                 params_profile['userid'] = userid
+                user = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s'" %userid)
+                user = user.get()
+                params_profile['chef_flag'] = user.ischef
         #----------------------------------------------------------------------------
         
         #-----------------------Get the Chef ID From the URL-------------------------
@@ -63,7 +66,7 @@ class ChefProfileHandler(webapp2.RequestHandler):
                     meal_specifications.append(unescape_html(meal.title))
                     meal_specifications.append(int(meal.price))
                     meal_specifications.append(int(meal.max_quantity))                    
-                    meal_specifications.append((meal.offered_date))
+                    meal_specifications.append((meal.offered_date_finish))
                     meal_specifications.append((meal.key()))
                     meals_list.append(meal_specifications)
             #------------------------------------------------------------------------

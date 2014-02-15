@@ -4,6 +4,7 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+
 handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
@@ -21,7 +22,8 @@ handlers:
 - url: /bootstrap/
   static_dir: bootstrap
 
-   
+
+ 
 
 - url: /(.*\.html)
   mime_type: text/html
@@ -33,7 +35,7 @@ handlers:
   script: main.app
 
 
-
 libraries:
 - name: webapp2
   version: "2.5.2"
+  

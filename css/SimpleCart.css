@@ -1,0 +1,26 @@
+.headerRow th{
+	font-size:1.8em;
+	font-family:fantasy;
+	vertical-align: middle;		
+	text-align: center;
+	padding-right: 30px;
+	padding-left: 30px;
+	padding-bottom: 20px;	
+}
+
+.itemRow td{
+	font-size:1.2em;
+	font-family:fantasy;
+	vertical-align: middle;	
+	text-align: center;
+	
+	padding-bottom: 20px;
+}
+
+.simpleCart_input{
+	font-size:1.2em;
+	font-family:fantasy;
+	vertical-align: middle;	
+	text-align: center;
+	width:15px;
+}

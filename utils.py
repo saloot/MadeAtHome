@@ -11,7 +11,8 @@ import urllib
 import re
 
 SECRET = "soghrat"
-
+home_site = "http://madeatmyhome.appspot.com"
+#home_site = "http://localhost:8083"
 COOKIE_RE = re.compile(r'.+=;\s+Path=/')
 def valid_cookie(cookie):
     return cookie and COOKIE_RE.match(cookie)
@@ -90,12 +91,6 @@ def valid_hash_cookie(h):
     else:
         return ""
 
-def escape_html(s):
-    s = s.replace('&',"&amp;")
-    s = s.replace(">","&gt;")     
-    s = s.replace("<","&lt;")
-    s = s.replace('"',"&quot;")    
-    return s
 
 def make_hashed_pw(name, pw):
     salt = make_salt()
@@ -149,9 +144,9 @@ def get_geolocation(postal_address):
                 lat = str(q['results'][0]['geometry']['location']['lat'])
                 lng = str(q['results'][0]['geometry']['location']['lng'])
             else:
-                return
+                return q['status'] 
                      
-    return lat,lng
+    return q['status'] 
 
 GMAPS_URL = "http://maps.googleapis.com/maps/api/staticmap?size=380x263&sensor=false"
 

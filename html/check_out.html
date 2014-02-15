@@ -1,0 +1,59 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+
+<div class="container marketing" style="margin-left:15%;">
+    <div style="width:750px; margin:50px auto 50px auto;">            
+        <div class="simpleCart_items"></div>        
+        <hr style="width:750px;"> 
+        
+        
+        <div style="font-size:1.8em;font-family:fantasy;margin-bottom: 20px;">
+            <table>
+                <tr>
+                    <td class="item-name">
+                        Grand total
+                    </td>                    
+                    <td>
+                        <div class="simpleCart_total" style="margin-left: 585%;"></div>
+                    </td>
+                </tr>
+            </table>    
+        </div>
+    </div>
+    <div style="width:850px; margin:50px auto 50px auto;">            
+        <a href="javascript:;" class="simpleCart_checkout" onclick="passPaypal();">
+        
+        <button type="submit" class="btn btn-primary btn-large" style="width:25%; float:right; text-align: center;font-size: 1.25em;">
+                        Check out!
+        </button>
+        </a>             
+        
+        <a href="/">
+        <button type="submit" class="btn btn-primary btn-large" style="width:25%; float:left;text-align: center;font-size: 1em;">                        
+                        Continue Shopping
+        </button>
+        </a>
+        
+    </div>
+    
+</div>
+
+<script src="simpleCart.js"></script>
+    <script>
+      simpleCart({
+        checkout: {
+          type: "PayPal",
+          email: "hesam.salavati-facilitator@epfl.ch",
+          sandbox: true,
+          cancel: "http://localhost:8083/_checkout",
+          success: "http://localhost:8083/_paymentstatus"
+        }
+      });
+    </script>
+    
+    
+  </body>
+</html>
+{% endblock %}>

@@ -128,25 +128,30 @@ class ChefSignUpHandler(webapp2.RequestHandler):
         
         #---------If Everything was Valid, Insert the Info into the Database---------
         if (signup_success_flag):                        
-            corrd = get_geolocation(user_postal_address)             
+            #corrd = get_geolocation(user_postal_address)             
+            #q = UserPass_Chef(user_id = userid,user_firstname = user_first_name,user_lastname = user_last_name,restaurant_name=restaraunt_val,
+            #    user_address = user_postal_address,user_email=user_email,user_latitude = corrd[0],
+            #    user_longitude=corrd[1],user_phone=userphone,user_bankacnt=user_paypal_email,no_reviews=0,user_rating=0)
             q = UserPass_Chef(user_id = userid,user_firstname = user_first_name,user_lastname = user_last_name,restaurant_name=restaraunt_val,
-                user_address = user_postal_address,user_email=user_email,user_latitude = corrd[0],
-                user_longitude=corrd[1],user_phone=userphone,user_bankacnt=user_paypal_email,no_reviews=0,user_rating=0)
+                user_address = user_postal_address,user_email=user_email,user_latitude = '0',
+                user_longitude='0',user_phone=userphone,user_bankacnt=user_paypal_email,no_reviews=0,user_rating=0)
             q.put()
             
-            #----Update the Corresponding Record on te Ordinary UserPass Database-----
             d = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s' " %userid)
             l = d.get()  
             l.ischef = 1
             l.user_firstname = user_first_name
             l.user_lastname = user_last_name
             l.user_address = user_postal_address
-            l.user_latitude = corrd[0]
-            l.user_longitude = corrd[1]
+            #l.user_latitude = corrd[0]
+            #l.user_longitude = corrd[1]
+            l.user_latitude = '0'
+            l.user_longitude = '1'
             l.user_phone = userphone
             l.user_email = user_email
+
             l.put()                                            
-            #------------------------------------------------------------------------
+            
             
             self.redirect('/welcome')                                       # Redirect the user to the welcome page
         #----------------------------------------------------------------------------    

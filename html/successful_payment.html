@@ -1,0 +1,32 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+<script>
+    $(document).ready(function() {
+    simpleCart.empty();
+        })
+</script>
+
+<style>
+       td{text-align:center;}
+</style>
+
+<div class="container marketing" style="margin-left:15%;">
+    <div align="center" style="width:70%; margin:50px auto 50px auto; border:solid; border-radius: 10px;text-align: center;">
+        <h1 style="font-size:2.2em;font-family:fantasy;margin-bottom: 20px;"> Thank you for your purchase! </h1>
+        <h2 style="font-size:1.3em;font-family:fantasy;margin-bottom: 20px;"> We have received your order and will soon deliver it to you </h2>
+        <h2 style="font-size:1.3em;font-family:fantasy;margin-bottom: 20px;"> order ID is <span style="color:#FF8040;">{{id_of_order}}</span>.</h2>
+        <h2 style="font-size:1.3em;font-family:fantasy;margin-bottom: 20px;">Here are the details of your order:</h2>
+        <table cellpadding="5" cellspacing="10" border="0" align="center" style="width:70%"> <tbody><tr><td style="width:150px;">Dish name</td> <td tyle="width:60px;">Price</td> <td style="width:60px;">Quantity</td> <td style="width:60px;">Chef</td></tr>'
+        {{order_details_html|safe}}        
+        </tbody>
+        </table><hr>
+        <h4 style="width:90%;margin-left:5%;"><span style="color:#888888;">The order is set to be delivered on <span style="color:#F70D1A;">{{delivery_date}}</span> to the following address:</span><br> <span style="color:#F70D1A;">{{user_address}}</span></span></h4>
+        <br>
+        <h4 style="width:85%;margin-left:7.5%;"><span style="color:#888888;">If you need to change any of these details or cancel your order, please <a href="{{home_site}}/_modify_order?v={{id_of_order}}">click here</a></span></span></h4>            
+    </div>
+    
+  </body>
+</html>
+{% endblock %}>

@@ -3,7 +3,7 @@
 {% block content %}
 	
 			
-	<div class="container marketing" style="margin-top:150px;">
+	<div class="container marketing" style="margin-top:110px;">
 		<div class="span10">
 			<h1> What would like to offer today? </h1>
 			<form method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -30,10 +30,18 @@
 				
 				
 				<div class="control-group">
-					<label class="control-label" for="meal_dater">When?</label>
+					<label class="control-label" for="meal_dater">From</label>
 					<div class="controls">
-						<input type="datetime-local" name="meal_date" value={{date_of_meal}} id="meal_dater">
-						<div style="color: red">{{error_date}}</div>
+						<input type="datetime-local" name="meal_date_begin" value={{date_of_meal_begin}} id="meal_dater_begin">
+						<div style="color: red">{{error_date_begin}}</div>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="meal_dater">To</label>
+					<div class="controls">
+						<input type="datetime-local" name="meal_date_finish" value={{date_of_meal_finish}} id="meal_dater_finish">
+						<div style="color: red">{{error_date_finish}}</div>
 					</div>
 				</div>
 				
@@ -82,10 +90,17 @@
 				<div class="control-group">
 					<label class="control-label" for="meal_desc">Meal description</label>
 					<div class="controls">
-						<textarea rows="10" style="width:120%" name="description_of_meal" id="meal_desc">
-							{{description_meal}}
-						</textarea>					
+						<textarea rows="10" style="width:120%" name="description_of_meal" id="meal_desc">{{description_meal}}</textarea>					
 						<div style="color: red">{{error_description}}</div>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="meal_promo">Optional: Promotional message (max. 150 characters)</label>
+					
+					<div class="controls">
+						<input type="text" maxlength="150" name="promotion_of_meal" style="width:75%;" value={{meal_promotion}} >						
+						<div style="color: red">{{error_promotion}}</div>
 					</div>
 				</div>
 				
@@ -186,7 +201,7 @@
 				
 				
 					
-				<label style="font-size: 15px;">The final meal should match the phot. Otherwise,
+				<label style="font-size: 15px;">The final meal should match the photos. Otherwise,
 							the buyer can refuse to pay!</label>
 						
 					

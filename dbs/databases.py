@@ -1,17 +1,18 @@
 from google.appengine.ext import db
 
 class Orders_DB(db.Model):
-    #order_id = db.StringProperty(required = True)
-    #price = db.IntegerProperty(required = True)
-    #chef_id = db.StringProperty(required = True)
-    #user_id = db.StringProperty(required = False)
-    #delivery_address = db.TextProperty(required = True)
-    #delivery_time = db.DateTimeProperty(required = True)
-    rating = db.IntegerProperty(required = True)
+    order_id = db.StringProperty(required = True)
+    price = db.FloatProperty(required = True)
+    chef_id = db.StringProperty(required = True)
+    user_id = db.StringProperty(required = False)
+    delivery_address = db.TextProperty(required = True)
+    delivery_time = db.DateTimeProperty(required = True)
+    rating = db.IntegerProperty(required = False)
     comments = db.TextProperty(required = False)
     created_date = db.DateTimeProperty(auto_now_add = False)
     reviewed = db.IntegerProperty(required = False, default = 0)
-    #postid = db.IntegerProperty(required = True)
+    order_details = db.TextProperty(required = True)
+    order_status = db.StringProperty(required = True)
 
 class UserPass_Chef(db.Model):
     user_id = db.StringProperty(required = True)    
@@ -41,7 +42,8 @@ class UserPass_User(db.Model):
     user_latitude = db.StringProperty(required = False)
     user_longitude = db.StringProperty(required = False)
     user_bonus = db.IntegerProperty(required = False, default = 0)
-    ischef = db.IntegerProperty(required = False, default = 0)    
+    ischef = db.IntegerProperty(required = False, default = 0)
+    orders = db.ListProperty(str)
     
 class FoodList(db.Model):
     chef_id = db.StringProperty(required = True)
@@ -55,7 +57,8 @@ class FoodList(db.Model):
     chef_lastname = db.StringProperty(required = True)
     chef_address = db.TextProperty(required = True)
     created_date = db.DateTimeProperty(auto_now_add = True)
-    offered_date = db.DateTimeProperty(required = True)
+    offered_date_begin = db.DateTimeProperty(required = True)
+    offered_date_finish = db.DateTimeProperty(required = True)
     chef_email = db.StringProperty(required = True)
     chef_latitude = db.StringProperty(required = True)
     chef_longitude = db.StringProperty(required = True)
@@ -66,7 +69,8 @@ class FoodList(db.Model):
     food_image3 = db.BlobProperty(required = False)
     food_image4 = db.BlobProperty(required = False)
     food_image5 = db.BlobProperty(required = False)
-
+    meal_promotion_msg = db.StringProperty(required = False)
+    
 class FoodTitles(db.Model):    
     title = db.StringProperty(required = True)
     food_type = db.StringProperty(required = False)

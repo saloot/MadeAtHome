@@ -13,35 +13,51 @@ import time
 from dbs.databases import *
 from utils import *
 from google.appengine.ext.webapp import template
+from datetime import date
 #====================================================================================
 
 #===================================THE MAIN CODE====================================
 class DisplayPostHandler(webapp2.RequestHandler):
+
     def get(self):   
         meal_key = self.request.get('m')
         key = 'post_%s' %meal_key
-        key_time = 'time_post_%s' %meal_key
-        meal = memcache.get(key)
-        if meal is None:            
-            meal = db.get(meal_key) 
-            #meals = db.GqlQuery("SELECT * FROM FoodList WHERE title = '%s'" %meal_key)
-            #meal = meals.get()                                                
-            memcache.set(key,meal)
-            memcache.set(key_time,time.time())    
-            
         
+        temp = self.request.cookies.get('delivery_date')
+        if temp:
+            delivery_date = temp
+        else:
+            thismoment = datetime.now()
+            thismoment = thismoment.replace(microsecond=0)
+        
+            rightnow = datetime.strptime(str(thismoment), "%Y-%m-%d %H:%M:%S")
+        
+            datetime_val = str(thismoment)[0:10]+'T'+str(thismoment)[11:16]
+            delivery_date = rightnow
+        #key_time = 'time_post_%s' %meal_key
+        #meal = memcache.get(key)        
+        #if meal is None:            
+        #    meal = db.get(meal_key) 
+        #    #meals = db.GqlQuery("SELECT * FROM FoodList WHERE title = '%s'" %meal_key)
+        #    #meal = meals.get()                                                
+        #    memcache.set(key,meal)
+        #    memcache.set(key_time,time.time())    
+            
+        meal = db.get(meal_key) 
         food = []                    
         food.append(unescape_html(meal.title))
         food.append(int(meal.price))
-        food.append(int(meal.max_quantity))                    
-        food.append((meal.offered_date))
-        
+        food.append(int(meal.max_quantity))
+        food.append(meal.offered_date_begin.date())
+        food.append(meal.offered_date_finish.date())
+        food.append(meal.meal_type)
         
         params_profile = {}
         params_profile['chef_name'] = meal.chef_id
         params_profile['key'] = meal_key
         params_profile['food'] = food
         params_profile['food_description'] = unescape_html(meal.description)
+        params_profile['delivery_time'] = delivery_date
         
         chefs = db.GqlQuery("SELECT * FROM UserPass_Chef WHERE user_id = '%s'" %meal.chef_id)
         chef = chefs.get()
@@ -74,12 +90,15 @@ class DisplayPostHandler(webapp2.RequestHandler):
             userid = valid_hash_cookie(temp)
             if userid:
                 params_profile['userid'] = userid
+                user = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s'" %userid)
+                user = user.get()
+                params_profile['chef_flag'] = user.ischef
+                
         self.response.out.write(template.render('./html/display_post.html',params_profile))
                 
-        last_chached = memcache.get(key_time)
+        #last_chached = memcache.get(key_time)
         #if last_chached:
         #    self.response.write('Queried %f seconds ago' %(time.time()-last_chached))
-#====================================================================================
 
 #===============================THE JASON HANDLER====================================
 # The JSON handler is responsible for producing proper JSON values, necessary for RSS

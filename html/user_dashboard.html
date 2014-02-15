@@ -1,40 +1,63 @@
 {% extends "base_page.html" %}
 
 {% block content %}
-
-
-
-<div style="width:500px; margin:150px auto 50px auto;">            
-    <h1 style="font-family: fantasy; font-size: 3em;">Chef {{chef_id}}'s Menu</h1>
-    <h2 style="font-family: fantasy; font-size: 2em;">Chef's rating {{chef_rating|safe}} <span style="font-size: .5em">(based on <a href="/reviews/_chef?u=saloot"> {{no_reviews}} Reviews </a>)</span></h2>
+<div class="container marketing" style="margin-top:20px;">
+    <h1 style="font-family: fantasy; font-size: 3em;">Welcome {{userid}}</h1>
 </div>
-
-<div class="container marketing">
-      <div class="row">
-<table class="table table-striped" style="font-family:fantasy; font-size: 2em;">
-    <tr style="height:70px;">
-        <td style="vertical-align: middle;">Title</td>
-        <td style="vertical-align: middle;">Price</td>
-        <td style="vertical-align: middle;">Will be ready for</td>
-        <td style="vertical-align: middle;"> Pix</td>
-    </tr>    
     
-    {% for food in food_list%}
-    <tr>
-        <td style="vertical-align: middle;"><a href="./_meal?m={{food.4}}">{{food.0}}</a></td>
-        <td style="vertical-align: middle;">{{food.1}}</td>
-        <td style="vertical-align: middle;">{{food.3}}</td>
-        <td style="vertical-align: middle;">
-            <a href="./_meal?m={{food.4}}">
-                <img src='/_image?k={{food.4}}&n=1' height="100" width="100"></img>
-            </a>
-        </td>
-    </tr>
-
-{% endfor %}
-</table>
+<div class="container marketing">
+    <div style="width:40%;float:right;">
+        <h2 style="font-family: fantasy; font-size: 2em;"><span style="font-size: .75em">Here are your last few orders</span></h2>
+            <table class="table table-striped" style="font-family:fantasy; font-size: 1em;">
+                <tr style="height:30px;">
+                    <td style="vertical-align: middle;text-align:center;">Title</td>
+                    <td style="vertical-align: middle;text-align:center;">Quantity</td>
+                    <td style="vertical-align: middle;text-align:center;">Price</td>
+                    <td style="vertical-align: middle;text-align:center;">Chef</td>
+                    <td style="vertical-align: middle;text-align:center;">Date</td>
+                </tr>    
+    
+                {% for order in orders_details_brief%}
+                    <tr>
+                        <td style="vertical-align: middle;text-align:center;"><a href="./_meal?m={{order.5}}">{{order.0}}</a></td>
+                        <td style="vertical-align: middle;text-align:center;">{{order.1}}</td>
+                        <td style="vertical-align: middle;text-align:center;">{{order.4}}</td>
+                        <td style="vertical-align: middle;text-align:center;"><a href="./_chef?u={{order.2}}">{{order.2}}</a></td>                                                
+                        <td style="vertical-align: middle;text-align:center;">{{order.3|safe}}</td>                        
+                    </tr>
+                {% endfor %}
+            </table>
+            <h4>To see a complete list of orders click <a href="{{home_site}}/_orders">here</a>.</h4>
+   
+            
       </div>
+    
+        <div style="width:40%;">
+            <h2 style="font-family: fantasy; font-size: 2em;"><span style="font-size: .75em">Here are our recommendations for you</span></h2>            
+            <table class="table table-striped" style="font-family:fantasy; font-size: 1em;">
+                <tr style="height:30px;">
+                    <td style="vertical-align: middle;">Title</td>
+                    <td style="vertical-align: middle;">Chef</td>
+                    <td style="vertical-align: middle;">Rate</td>
+                    <td style="vertical-align: middle;"> Pix</td>
+                </tr>    
+    
+                {% for food in food_list%}
+                    <tr>
+                        <td style="vertical-align: middle;"><a href="./_meal?m={{food.4}}">{{food.0}}</a></td>
+                        <td style="vertical-align: middle;text-align:center;"><a href="./_chef?u={{food.2}}">{{food.2}}</a></td>                                                
+                        <td style="vertical-align: middle;">{{food.3|safe}}</td>
+                        <td style="vertical-align: middle;">
+                            <a href="./_meal?m={{food.1}}">
+                                <img src='/_image?k={{food.1}}&n=1' height="50" width="50" style="border-radius: 10px;"></img>
+                            </a>
+                        </td>
+                    </tr>
 
+                {% endfor %}
+            </table>
+            
+       </div>
 
 
 

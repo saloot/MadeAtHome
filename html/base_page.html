@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="./bootstrap/docs-assets/ico/favicon.png">
-
-    <title>Carousel Template for Bootstrap</title>
+    <!--<link rel="shortcut icon" href="./bootstrap/docs-assets/ico/favicon.png"> -->
+    <link rel="shortcut icon" href="./bootstrap/docs-assets/ico/logo.jpg">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+      
+    <title>Cooked@Home</title>
 
     <!-- Bootstrap core CSS -->
     <!-- <link href="./bootstrap/dist/css/bootstrap.css" rel="stylesheet"> -->
@@ -22,18 +24,22 @@
       <script src="./js/bootstrap-collapse.js"></script>
     <script src="./js/bootstrap-collapse-min.js"></script>
     <![endif]-->
+        <!-- link to jQuery library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <!-- link to simpleCartjs -->
+    
+    <script src="./js/simpleCart.js"></script>
+
     
     <!-- Custom styles for this template -->
     <link href="./css/carousel.css" rel="stylesheet">
+      
+    <link rel="stylesheet" href="./css/SimpleCart.css">
   </head>
 <!-- NAVBAR
 ================================================== -->
   <body>
     {% block navbar %}
-    
-          
-            
-	      
     
 
     <div class="navbar navbar-inverse navbar-static-top">
@@ -52,34 +58,64 @@
           <div class="nav-collapse collapse navbar-responsive-collapse">
             <ul class="nav">	      
 	      <li class={{isactive.0}}><a href="/">Home</a></li>
-              <li class={{isactive.1}}><a href="/how_it_works">How it works</a></li>
-              <li class={{isactive.2}}><a href="/about">About</a></li>
-	    </ul>	
+	      <li class={{isactive.2}}><a href="/best_offers">Today Offers!</a></li>
+	      {% if userid%}
+		<li class={{isactive.2}}><a href="/_favourties?u={{userid}}">My Favourites</a></li>
+	      {% else %}
+		<li class={{isactive.1}}><a href="/how_it_works">How it works</a></li>
+	      {% endif %}
+	      
+	      <li>
+		
+	      </li>
+	      <li class="dropdown" style="margin-left: 20px;">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown"  >
+		  <i class="fa fa-shopping-cart fa-lg"></i>
+		  <span class="simpleCart_total" style="padding-left: 5px;"></span>
+		  <!-- <span class="simpleCart_quantity"></span> items -->		  
+		  <b class="caret"></b>
+		</a>		
+	      	<ul class="dropdown-menu">
+		  <!-- <li> &nbsp &nbsp <span class="simpleCart_total" style="padding-left: 5px;"></span> </li> -->
+		  <li> <a href="/_checkout">Checkout</a> </li>
+		  <li> <a href="javascript:;" class="simpleCart_empty"> Empty Cart</a> </li>
+	      	</ul>		
+              </li>
+	    </ul>
               	
-            <form class="navbar-search pull-left" action="">
+            <!--
+	    <form class="navbar-search pull-left" action="">
 	      <input type="text" class="search-query span2" placeholder="Search">
 	    </form>
+	    -->
             <ul class="nav pull-right"style="padding-right: 20px;" >
-              <li><a href="#" >Link</a></li>
-              <li class="divider-vertical></li>
+	      {% if userid%}
+		{% if chef_flag%}			      
+		  <li><a href="/_chef?u={{userid}}">My restaurant</a></li>
+		  <li class="divider-vertical></li>
+		{% else %}
+		  <li><a href="/chef_signup">Become a Chef!</a></li>
+		{% endif %}
+	      {% endif %}	
               <li class="dropdown">
 	      {% if userid%}
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown"  >{{userid}} <b class="caret"></b></a>
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown"  >{{userid}} <b class="caret"></b></a>		
 	      	<ul class="dropdown-menu">
 	          <li><a href="/welcome">My dashboard</a></li>
 		  <li><a href="/profile_settings">Profile settings</a></li>
 		  {% if chef_flag%}
 		    <li class="divider"></li>			  
-		    <li><a href="/newpost">Offer new meal</a></li>
-		    <li><a href="/_chef?u={{userid}}">My restaurant</a></li>		    
-		  {% else %}
-		    <li class="divider"></li>
-		    <li><a href="/chef_signup">Become a Chef!</a></li>
+		    <li><a href="/newpost">Offer new meal</a></li>		  		
 		  {% endif %}
 	    	  <li class="divider"></li>			  
-		  <li><a href="/logout">Logout</a></li>					
+		  <li><a href="/logout">Logout</a></li>
 	      	</ul>
-	        {% else %}
+		
+		
+	      {% else %}
+		  <li><a href="/login">Sign in</a></li>
+		  
+		  <!--
 		  <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Sign in<b class="caret"></b></a>
 		  <ul class="dropdown-menu">
 		    <li><a href="/login">Sign in</a></li>					
@@ -87,6 +123,7 @@
 		    <li class="dropdown-header">Or...</li>
 		    <li><a href="/signup">Signup</a></li>					
 		  </ul>
+		  -->
 		{% endif %} 
               </li>
             </ul>
@@ -105,7 +142,7 @@
  <div class="container" style="margin-top:100px;">
       <footer>
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <p>&copy; 2013 Cooked@Home, Inc. &middot; <a href="/about">About Us</a> &middot; <a href="/Privacy">Privacy</a> &middot; <a href="/terms">Terms</a> &middot; <a href="/contacts">Contact Us</a></p>
       </footer>
 
     </div><!-- /.container -->
