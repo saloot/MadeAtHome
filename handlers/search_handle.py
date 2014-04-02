@@ -84,13 +84,13 @@ class SearchHandler(webapp2.RequestHandler):
                     
                     if meal.meal_type == str(desired_title):
                         if datetime.strptime(str(delivery_date), "%Y-%m-%d %H:%M:%S") < meal.offered_date_finish:
-                            meal_specifications = []                    
-                            meal_specifications.append(unescape_html(meal.title))
-                            meal_specifications.append(int(meal.price))
-                            meal_specifications.append(int(meal.max_quantity))                                    
-                            meal_specifications.append((meal.offered_date_begin.date()))
-                            meal_specifications.append((meal.key()))
-                            meal_specifications.append(str(meal.chef_id))
+                            review_specifications = []                    
+                            review_specifications.append(unescape_html(meal.title))
+                            review_specifications.append(int(meal.price))
+                            review_specifications.append(int(meal.max_quantity))                                    
+                            review_specifications.append((meal.offered_date_begin.date()))
+                            review_specifications.append((meal.key()))
+                            review_specifications.append(str(meal.chef_id))
                             
                             rating_str = ""
                                 
@@ -99,9 +99,9 @@ class SearchHandler(webapp2.RequestHandler):
                             for i in range(5-int(chef.user_rating)):    
                                 rating_str = rating_str + "<span>&#9734</span>"
                                             
-                            meal_specifications.append(rating_str)
-                            meal_specifications.append((meal.offered_date_finish.date()))
-                            search_results.append(meal_specifications)
+                            review_specifications.append(rating_str)
+                            review_specifications.append((meal.offered_date_finish.date()))
+                            search_results.append(review_specifications)
                             success_flag = 1
                             break
                             
@@ -132,6 +132,91 @@ class SearchHandler(webapp2.RequestHandler):
                         user = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s'" %userid)
                         user = user.get()
                         params_front['chef_flag'] = user.ischef
+                
+                
+                #---------------------------Detect the Location From IP-------------------
+                ip = self.request.remote_addr
+                response = urllib.urlopen('http://api.hostip.info/get_html.php?ip=%s&position=true'%ip).read()
+        
+                em = re.search('Longitude: \S+', str(response))
+                if em:
+                    temp = em.group(0)
+                    user_long = temp[10:len(temp)]            
+                else:
+                    user_long = ''
+        
+                em = re.search('Latitude: \S+', str(response))
+                if em:
+                    temp = em.group(0)
+                    user_lat = temp[10:len(temp)]
+                    self.response.out.write(user_lat)
+                else:
+                    user_lat = ''
+            
+                em = re.search('Country: \S+', str(response))
+                if em:
+                    temp = em.group(0)
+                    user_country = temp[9:len(temp)]
+                    if user_country != '(Private': 
+                        user_address = user_country
+                    else:
+                        user_address = 'Unknown'
+                    
+                else:
+                    user_country = ''
+        
+                em = re.search('City: \S+', str(response))
+                if em:
+                    temp = em.group(0)
+                    user_city = temp[6:len(temp)]
+                    if ( (user_city != '(Unknown') & (user_city != '(Private')): 
+                        user_address = user_address + ', ' + user_city
+                else:
+                    user_city = ''
+                    
+                
+                params_front['user_address'] = user_address
+                #-------------------------------------------------------------------------
+        
+                #------------------------Extract Delivery Date----------------------------
+                month = delivery_date[5:7]
+                if (month == '01'):
+                    month = 'January'
+                elif (month == '02'):
+                    month = 'February'
+                elif (month == '03'):
+                    month = 'March'
+                elif (month == '04'):
+                    month = 'April'
+                elif (month == '05'):
+                    month = 'May'
+                elif (month == '06'):
+                    month = 'June'
+                elif (month == '07'):
+                    month = 'July'
+                elif (month == '08'):
+                    month = 'August'
+                elif (month == '09'):
+                    month = 'September'
+                elif (month == '10'):
+                    month = 'October'
+                elif (month == '11'):
+                    month = 'November'
+                else:
+                    month = 'December'
+                
+                deliv_hour = delivery_date[11:13]
+                deliv_time = delivery_date[11:16]
+                deliv_date = delivery_date[8:10] + ' ' + month + ', ' + delivery_date[0:4]
+                
+                if (int(deliv_hour) >= 12):
+                    deliv_date = deliv_date + ' at ' + deliv_time + ' PM'
+                else:
+                    deliv_date = deliv_date + ' at ' + deliv_time + ' AM'
+                #self.response.out.write(deliv_date)
+                params_front['delivery_date'] = deliv_date
+                #-------------------------------------------------------------------------
+                
                 self.response.out.write(template.render('./html/display_search_results.html',params_front))        
         else:
             self.response.out.write('Sorry your query did not yield any results!')

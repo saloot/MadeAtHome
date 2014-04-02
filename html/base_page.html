@@ -60,7 +60,12 @@
 	      <li class={{isactive.0}}><a href="/">Home</a></li>
 	      <li class={{isactive.2}}><a href="/best_offers">Today Offers!</a></li>
 	      {% if userid%}
-		<li class={{isactive.2}}><a href="/_favourties?u={{userid}}">My Favourites</a></li>
+		<li class={{isactive.3}}><a href="/_favourties?u={{userid}}">My Favourites</a></li>
+		{% if newmessage %}
+		  <li class={{isactive.4}}><a href="/message_inbox"><span class="fa-stack fa-lg" style="margin-top:-12px;margin-right:-5px;"> <i class="fa fa-envelope fa-stack-1x" ></i><i style="color:red;margin-top:-15px;margin-left:17px;" class="fa fa-bell fa-stack"></i></span></a></li>
+		{% else %}
+		  <li class={{isactive.4}}><a href="/message_inbox"><i style="margin-right:-15px;" class="fa fa-envelope fa-1x" ></i></a></li>
+		{% endif %}
 	      {% else %}
 		<li class={{isactive.1}}><a href="/how_it_works">How it works</a></li>
 	      {% endif %}
@@ -133,6 +138,7 @@
     </div>
     </div>
     <!-- ============================================ -->
+    
     
     {% block content %}{% endblock %}
     

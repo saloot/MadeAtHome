@@ -10,10 +10,12 @@ import webapp2
 from google.appengine.api import memcache
 from google.appengine.ext import db
 import time
+
 from dbs.databases import *
 from utils import *
 from google.appengine.ext.webapp import template
 from datetime import date
+from datetime import datetime
 #====================================================================================
 
 #===================================THE MAIN CODE====================================
@@ -43,6 +45,7 @@ class DisplayPostHandler(webapp2.RequestHandler):
         #    memcache.set(key,meal)
         #    memcache.set(key_time,time.time())    
             
+        #self.response.out.write(delivery_date)
         meal = db.get(meal_key) 
         food = []                    
         food.append(unescape_html(meal.title))

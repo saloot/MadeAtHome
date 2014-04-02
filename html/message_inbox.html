@@ -1,0 +1,63 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+
+
+<!--<div style="width:500px; margin:150px auto 50px auto;">            
+    <h1 style="font-family: fantasy; font-size: 3em;">Chef {{chef_id}}'s Menu</h1>
+    <h2 style="font-family: fantasy; font-size: 2em;">Chef's rating {{chef_rating|safe}} <span style="font-size: .5em">(based on <a href="/_reviews_chef?u=saloot"> {{no_reviews}} Reviews </a>)</span></h2>
+</div>
+
+<div style="width:500px;float:right;margin-top:-50px;">    
+    <a href="./message_send?u={{chef_id}}">
+        <button type="submit" class="btn btn-warning btn-large" style="vertical-align: middle;width:37%; float:right;text-align: center;margin-top:-75px;margin-right:140px;">                        
+                        <i class="fa fa-envelope fa-1.6x"></i> <span style="font-size: 1em">&nbsp;Contact Chef</span>
+        </button>
+    </a>    
+</div>
+-->
+
+<div class="container marketing;" style="margin-top:80px;">
+    <h3 style="font-family: fantasy; font-size: 2em;margin-bottom: 40px;">Received messages</h3>
+<div style="font-family:fantasy; float:left;font-size: 1em;width:130px;margin-top:10;border-radius: 5px;padding: 5px 5px 5px 5px;text-align:center;">    
+    <span style="color:red;"><a href="./message_inbox" style="color:#D1D0CE;">Received Messages</a></span>
+    <br>
+    <br>
+    <span style="color:red;"><a href="./message_sent">Sent Messages</a></span>    
+</div>
+
+<div class="container marketing;" style="width:80%;margin-left:10px;float:left;border-left:solid 1px;padding-left:5px;">
+      
+<table class="table" style="font-family:fantasy; font-size: 1.2em;">
+    <tr style="height:40px;">
+        <td style="vertical-align: middle;">Title</td>        
+        <td style="vertical-align: middle;">From</td>        
+        <td style="vertical-align: middle;">Date</td>
+        <td style="vertical-align: middle;">Content</td>
+    </tr>
+    
+    
+    
+    {% for msg in message_list%}
+        {% if not msg.3 %}
+            <tr style="background-color: #E5E4E2;">
+        {% else %}
+            <tr style="background-color: white;">
+        {% endif %}
+        <td style="vertical-align: middle;"><a href="./_msg?k={{msg.6}}">{{msg.0}}</a></td>
+        <td style="vertical-align: middle;">{{msg.2}}</td>
+        <td style="vertical-align: middle;">{{msg.5}}</td>
+        <td style="vertical-align: middle;"><a href="./_msg?k={{msg.6}}">{{msg.1}}</a></td>
+    </tr>
+
+{% endfor %}
+</table>
+      </div>
+</div>
+
+
+
+  </body>
+</html>
+{% endblock %}

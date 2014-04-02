@@ -1,32 +1,100 @@
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="/css/search_results_style.css">
-</head>
+<head><link rel="stylesheet" type="text/css" href="/css/search_results_style.css"></head>
+{% extends "base_page.html" %}
 
-<form method="post">
-
+{% block content %}
+<div class="container marketing" style="margin-left:15%;">
+    {% if not submitted %}
+    
+    
+	<form method="post">
     
 	<h1>Review</h1>
 	<br>
 
-	<div class="wrapper">	
-		<input type="radio" name="rating_button" id="star-1" class="rating_radio" value="5"><label for="star-1" class="rating_label"></label>
-		<input type="radio" name="rating_button" id="star-2" class="rating_radio" value="4"><label for="star-2" class="rating_label"></label>
-		<input type="radio" name="rating_button" id="star-3" class="rating_radio" value="3"><label for="star-3" class="rating_label"></label>
-		<input type="radio" name="rating_button" id="star-4" class="rating_radio" value="2"><label for="star-4" class="rating_label"></label>
-		<input type="radio" name="rating_button" id="star-5" class="rating_radio" value="1"><label for="star-5" class="rating_label"></label>	
+	<div>
+		<div style="float:left;font-family: fantasy;margin-right: 10px;">
+			The food quality:
+		</div>
+		<div class="wrapper" style="float:left;margin-right:20px;">	
+			<input type="radio" name="rating_button" id="star-1" class="rating_radio" value="5"><label for="star-1" class="rating_label"></label>
+			<input type="radio" name="rating_button" id="star-2" class="rating_radio" value="4"><label for="star-2" class="rating_label"></label>
+			<input type="radio" name="rating_button" id="star-3" class="rating_radio" value="3"><label for="star-3" class="rating_label"></label>
+			<input type="radio" name="rating_button" id="star-4" class="rating_radio" value="2"><label for="star-4" class="rating_label"></label>
+			<input type="radio" name="rating_button" id="star-5" class="rating_radio" value="1"><label for="star-5" class="rating_label"></label>	
+		</div>
+	</div>
+	
+	<div>
+		<div style="float:left;font-family: fantasy;margin-right: 10px;">
+			The food portion:
+		</div>
+		<div class="wrapper" style="float:left;margin-right:20px;">	
+			<input type="radio" name="rating_delivery" id="star-12" class="rating_radio" value="5"><label for="star-12" class="rating_label"></label>
+			<input type="radio" name="rating_delivery" id="star-22" class="rating_radio" value="4"><label for="star-22" class="rating_label"></label>
+			<input type="radio" name="rating_delivery" id="star-32" class="rating_radio" value="3"><label for="star-32" class="rating_label"></label>
+			<input type="radio" name="rating_delivery" id="star-42" class="rating_radio" value="2"><label for="star-42" class="rating_label"></label>
+			<input type="radio" name="rating_delivery" id="star-52" class="rating_radio" value="1"><label for="star-52" class="rating_label"></label>	
+		</div>
+	</div>
+	
+	<div>
+		<div style="float:left;font-family: fantasy;;margin-right: 10px">
+			The timliness of the delivery:
+		</div>
+		<div class="wrapper" style="float:left;margin-right: 20px;">	
+			<input type="radio" name="delivery_Rating" id="star-13" class="rating_radio" value="5"><label for="star-13" class="rating_label"></label>
+			<input type="radio" name="delivery_Rating" id="star-23" class="rating_radio" value="4"><label for="star-23" class="rating_label"></label>
+			<input type="radio" name="delivery_Rating" id="star-33" class="rating_radio" value="3"><label for="star-33" class="rating_label"></label>
+			<input type="radio" name="delivery_Rating" id="star-43" class="rating_radio" value="2"><label for="star-43" class="rating_label"></label>
+			<input type="radio" name="delivery_Rating" id="star-53" class="rating_radio" value="1"><label for="star-53" class="rating_label"></label>	
+		</div>
+	
 	</div>
 	
 	<div style="color: red">{{error_rating}}</div>
-	<br>	
+	
+	<hr>
+	<br>
+	<div>
+	<label>	Review title (optional)</label>
+	<input type="text" name="review_title" style="height:30px" value="{{title_value|safe}}">
+	</div>
 	<label>	
 	<div> Comments (optional)</div>
-	 <textarea name="comments">{{comments_value}}</textarea>
+	 <textarea name="comments" style="height:200px;width:500px;">{{comments_value|safe}}</textarea>
 	</label>
 	<div style="color: red">{{error_comments}}</div>	
 	
 	<br>
 	<br>
-	<input type="submit">
-</form>
+	<button type="submit" class="btn btn-primary btn" style="vertical-align: middle;width:10%; text-align: center;margin-top: -30px;">
+                 <span style="font-size: 1em">submit</span>
+        </button>
+	
+	</form>
+	{% else %}
+		<br>
+		<h3 style="font-family: fantasy;font-size: 1.5em;">Thank you for your comments. We really appreciate that.</h3>
+		<h4 style="font-family: fantasy;font-size: 1.3em;">Your review is now added to our database.</h4>
+	
+	<h3 style="font-family: fantasy; font-size: 1.2em;">Your rating: {{rating|safe}}</span></h3>		
+	<br>	
+	<label>	
+	<div> <h3 style="font-family: fantasy;font-size: 1.2em;">You said:</h3></div>
+	<label> {{title_value|safe}}</label>
+	<table>
+		<tr>
+			<td style="width:40%;margin-top: 5px;">{{comments_value|safe}}</td>
+		</tr>
+	</table>
+	 
+	</label>
+	
+	
+	{% endif %}
+    </div>
+    
+      </body>
+</html>
+{% endblock %}>
 

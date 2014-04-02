@@ -13,7 +13,7 @@
         <div class="row" style="float: left;width:28%;padding-right: 100px;">                
                 <p hidden class="item_number">{{key}}</p>
                 <p hidden class="item_chef">{{chef_name}}</p>
-                <p hidden class="item_deliv">{{delivery_time}}</p>
+                <p hidden class="item_deliv">{{delivery_time}}</p>                
                 
                 <table class="table" style="font-family:fantasy; font-size: 1.5em;height:430px">
                     <col width="1060px">
@@ -40,7 +40,7 @@
                         <td  style="vertical-align: middle;">{{chef_rate|safe}}</td>                
                     </tr>
                     <tr>
-                        <td  style="vertical-align: middle;">Number left?</td>
+                        <td  style="vertical-align: middle;">Numbers left?</td>
                         <td  style="vertical-align: middle;">{{meal_left}}</td>                
                     </tr>    
                 </table>
@@ -68,7 +68,7 @@
                    
                 </form>
                 -->
-                <input type="text" value="1" class="item_Quantity" style="width:30px;height:33px;text-align: center;font-size:1em;float:left;margin-right: 10px;">
+                <input type="number" value="1" max="{{meal_left}}" min="1" class="item_Quantity" style="width:30px;height:33px;text-align: center;font-size:1em;float:left;margin-right: 10px;">
                 <a class="item_add" href="javascript:;">                    
                     <button type="submit" class="btn btn-primary btn-large" style="width:80%;
                         margin-bottom:20px;text-align: center;font-size: 2em;

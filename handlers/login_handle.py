@@ -26,6 +26,7 @@ class LoginHandler(webapp2.RequestHandler):
         user_flag = valid_name(self.request.get('username'))
         password_flag = valid_pass(self.request.get('password'))
         remember_me_flag = self.request.get('remember_me_box')
+        return_url = self.request.get('original_url')
         self.response.out.write(remember_me_flag)
         params = ["","","","unchecked"]
         success_flag = 1
@@ -75,8 +76,11 @@ class LoginHandler(webapp2.RequestHandler):
                     #cookee['user_id']['max-age'] = 10
                 #print cookee
                 self.response.headers.add_header('Set-Cookie','user_id=%s' % str(hashed_val))
-                
-            self.redirect('/welcome')
+            
+            if return_url:
+                self.redirect(return_url)
+            else:
+                self.redirect('/welcome')
         else:                
             login_templ_params= {"error_username": params[0], "error_password":params[1],"username_value":params[2],"check_box_val":params[3]}
             

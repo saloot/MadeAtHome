@@ -1,0 +1,81 @@
+<head><link rel="stylesheet" type="text/css" href="/css/search_results_style.css"></head>
+{% extends "base_page.html" %}
+
+{% block content %}
+<div class="container marketing" style="margin-left:15%;">
+    
+    <br>
+    
+    <h3 style="font-family: fantasy;font-size: 1.5em;">{{message.0|safe}}</h3>	    
+    
+    {% if not message_active %}
+    <!--<span style="height:30px;width:500px;border-radius: 10px;padding: 5px 10px 1px 1px;"> <span style="font-family: fantasy;font-size:1.3em;">Conversation with:</span> {{message.1}}</span>
+    -->
+    <br>
+    <table>
+    {% for msg in messages%}
+	<tr style="margin-top:10px;margin-bottom: 20px;width:600px;vertical-align: text-top;">
+	    <td style="height:auto;width:auto;border-radius: 10px;padding: 5px 10px 5px 10px;">
+		{% if msg.1 = 'You' %}
+		    <span style="color:#848482;">{{msg.1}}</span>
+		{% else %}
+		    <span style="color:#1589FF;">{{msg.1}}</span>
+		{% endif %}
+	    </td>
+	{% if forloop.counter|divisibleby:2 %}	    	    
+	    <td style="height:auto;width:65%;margin-top:5px; background-color: white;border-radius: 10px;padding: 5px 10px 5px 10px;">
+		{{msg.0|safe}}
+	    </td>
+	    <td style="font-family: fantasy;height:auto;border-radius: 10px;margin-top:0px;">
+		{{msg.2|safe}}
+	    </td>
+	{% else %}	    
+	    <td style="height:auto;width:65%;margin-top:5px;background-color: #E5E4E2;border-radius: 10px;padding: 5px 10px 5px 10px;">
+		{{msg.0|safe}}
+	    </td>
+	    <td style="font-family: fantasy;height:auto;border-radius: 10px;margin-top:0px;">
+		{{msg.2|safe}}
+	    </td>
+	{% endif %}
+	</tr>
+    {% endfor %}
+    </table>
+    <a href="./_msg?k={{key}}&r=1">
+    <button type="submit" class="btn btn-primary btn" style="vertical-align: middle;width:7%; text-align: center;margin-top: 10px;">
+        <span style="font-size: 1em">Reply</span>
+    </button>
+    </a>
+    
+    {% else %}
+    
+    <span style="height:30px;width:500px;border-radius: 10px;padding: 5px 10px 1px 1px;"> <span style="font-family: fantasy;">To:</span> {{message.1}}</span>
+        
+    {% for msg in message_body%}
+	<div style="height:auto;width:500px;margin-top:10px;background-color: #E5E4E2;border-radius: 10px;padding: 5px 10px 5px 10px;">{{msg|safe}}</div>
+    {% endfor %}
+    
+    
+    
+    <form method="post">
+	
+	<input type="hidden" value ="{{message.1}}" name="recepient">
+	<div style="color: red">{{error_recpient}}</div>	
+	<input type="hidden" value ="{{message.0}}" name="reply_title">
+	<div style="color: red">{{error_title}}</div>	
+	<div style="height:200px;width:500px;margin-top:10px;">
+    	<textarea name="reply_message" style="height:200px;width:500px;"></textarea>{{replay_value|safe}}</textarea>
+	</div>
+	<div style="color: red">{{error_message}}</div>
+        
+	<button type="submit" class="btn btn-primary btn" style="vertical-align: middle;width:7%; text-align: center;margin-top: 10px;">
+	    <span style="font-size: 1em">Send</span>
+	</button>
+    </form>
+    {% endif %}
+		
+</div>
+    
+      </body>
+</html>
+{% endblock %}>
+

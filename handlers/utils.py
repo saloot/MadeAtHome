@@ -142,7 +142,7 @@ def get_geolocation(postal_address):
             else:
                 return q['status']
                      
-    return q['status'] 
+    return lat,lng 
 
 GMAPS_URL = "http://maps.googleapis.com/maps/api/staticmap?size=380x263&sensor=false"
 

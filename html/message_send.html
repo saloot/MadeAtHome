@@ -1,0 +1,50 @@
+<head><link rel="stylesheet" type="text/css" href="/css/search_results_style.css"></head>
+{% extends "base_page.html" %}
+
+{% block content %}
+<div class="container marketing" style="margin-left:15%;">
+    {% if not submitted %}
+    
+	<div style="color: red">{{error_chef}}</div>	
+	<form method="post">
+    
+	
+	<br>
+	<div>
+	<label>Subject </label>
+	<input type="text" name="message_title" style="height:30px" value="{{title_value|safe}}">
+	</div>
+	<div style="color: red">{{error_title}}</div>	
+	<label>
+	    
+	<div> Messeage body</div>
+	 <textarea name="message" style="height:200px;width:500px;">{{message_value|safe}}</textarea>
+	</label>
+	<div style="color: red">{{error_message}}</div>	
+	
+	
+	<br>
+	<br>
+	
+	<button type="submit" class="btn btn-primary btn" style="vertical-align: middle;width:10%; text-align: center;margin-top: -30px;">
+                 <span style="font-size: 1em">Send</span>
+        </button>
+	</form>
+	{% else %}
+		<br>
+		<h3 style="font-family: fantasy;font-size: 1.5em;">Your message has been sent!</h3>	    
+    
+	<label>		
+	<label style="height:30px;width:500px;background-color: #E5E4E2;border-radius: 10px;padding: 5px 10px 1px 10px;"> Subject: {{title_value|safe}}</label>	
+	<div style="height:200px;width:500px;background-color: #E5E4E2;border-radius: 10px;padding: 5px 10px 5px 10px;">{{message_value|safe}}</div>
+		
+	</label>
+	
+	
+	{% endif %}
+    </div>
+    
+      </body>
+</html>
+{% endblock %}>
+

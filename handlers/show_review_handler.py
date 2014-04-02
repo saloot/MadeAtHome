@@ -16,22 +16,22 @@ import time
 
 
 #===================================THE MAIN CODE====================================
-class ChefProfileHandler(webapp2.RequestHandler):
+class ChefShowReview(webapp2.RequestHandler):
     
     #---------------------Display the HTML Template Upon Loading---------------------    
-    def get(self):
+    def get(self):        
         
-        params_profile = {}                         # The list of parametersthat will be passed to the html template
+        params_review = {}                         # The list of parametersthat will be passed to the html template
         
         #----------------------Check If a User Has Signed In-------------------------
         temp = self.request.cookies.get('user_id')
         if temp:
             userid = valid_hash_cookie(temp)
             if userid:
-                params_profile['userid'] = userid
+                params_review['userid'] = userid
                 user = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s'" %userid)
                 user = user.get()
-                params_profile['chef_flag'] = user.ischef
+                params_review['chef_flag'] = user.ischef
         #----------------------------------------------------------------------------
         
         #-----------------------Get the Chef ID From the URL-------------------------
@@ -46,7 +46,7 @@ class ChefProfileHandler(webapp2.RequestHandler):
         else:            
 
             #------------------------Chef's Complete Name----------------------------
-            params_profile['chef_name'] = chef.user_firstname + ' ' + chef.user_lastname
+            params_review['chef_name'] = chef.user_firstname + ' ' + chef.user_lastname
             #------------------------------------------------------------------------
             
             #-----------------------Extract Chef's Rating----------------------------
@@ -58,28 +58,34 @@ class ChefProfileHandler(webapp2.RequestHandler):
             #------------------------------------------------------------------------ 
                                         
             #-------------------Find the Meals Offerd by the Chef--------------------
-            meals_list = []                             # The list of meals offered by the chef
-            chef_meals = db.GqlQuery("SELECT * FROM FoodList WHERE chef_id = '%s'" %u)
-            if chef_meals:                
-                for meal in chef_meals:
-                    review_specifications = []                    
-                    review_specifications.append(unescape_html(meal.title))
-                    review_specifications.append(int(meal.price))
-                    review_specifications.append(int(meal.max_quantity))                    
-                    review_specifications.append((meal.offered_date_finish))
-                    review_specifications.append((meal.key()))
-                    meals_list.append(review_specifications)
+            review_list = []                             # The list of meals offered by the chef
+            reviews = db.GqlQuery("SELECT * FROM Reviews_DB WHERE chef_id = '%s'" %u)
+            if reviews:                
+                for review in reviews:
+                    if review.comments:
+                        review_specifications = []                                        
+                        review_specifications.append(unescape_html(review.comments))
+                        review_str = ""             
+                        for i in range(int(review.rating)):
+                            review_str = review_str + "<span>&#9733</span>"
+                        for i in range(5-int(review.rating)):
+                            review_str = review_str + "<span>&#9734</span>"
+                            
+                        review_specifications.append(review_str)
+                        review_specifications.append(unescape_html(review.title))
+                    
+                        review_list.append(review_specifications)
             #------------------------------------------------------------------------
             
             #-------------------Assign the HTML Template Parameters------------------
-            params_profile['food_list'] = meals_list 
-            params_profile['chef_rating'] = rating_str               
-            params_profile['no_reviews'] = chef.no_reviews
-            params_profile['chef_id'] = chef.user_id
+            params_review['review_list'] = review_list 
+            params_review['chef_rating'] = rating_str               
+            params_review['no_reviews'] = chef.no_reviews
+            params_review['chef_id'] = chef.user_id
             #------------------------------------------------------------------------
             
             #----------------------Display the Final HTML File-----------------------
-            self.response.out.write(template.render('./html/display_profile.html',params_profile))
+            self.response.out.write(template.render('./html/display_reviews.html',params_review))
             #------------------------------------------------------------------------
             
         #----------------------------------------------------------------------------        
@@ -87,4 +93,4 @@ class ChefProfileHandler(webapp2.RequestHandler):
         
     #--------------------------------------------------------------------------------
 
-#====================================================================================
+#====================================================================================bb

@@ -6,7 +6,15 @@
 
 <div style="width:500px; margin:150px auto 50px auto;">            
     <h1 style="font-family: fantasy; font-size: 3em;">Chef {{chef_id}}'s Menu</h1>
-    <h2 style="font-family: fantasy; font-size: 2em;">Chef's rating {{chef_rating|safe}} <span style="font-size: .5em">(based on <a href="/reviews/_chef?u=saloot"> {{no_reviews}} Reviews </a>)</span></h2>
+    <h2 style="font-family: fantasy; font-size: 2em;">Chef's rating {{chef_rating|safe}} <span style="font-size: .5em">(based on <a href="/_reviews_chef?u=saloot"> {{no_reviews}} Reviews </a>)</span></h2>
+</div>
+
+<div style="width:500px;float:right;margin-top:-50px;">    
+    <a href="./message_send?u={{chef_id}}">
+        <button type="submit" class="btn btn-warning btn-large" style="vertical-align: middle;width:37%; float:right;text-align: center;margin-top:-75px;margin-right:140px;">                        
+                        <i class="fa fa-envelope fa-1.6x"></i> <span style="font-size: 1em">&nbsp;Contact Chef</span>
+        </button>
+    </a>    
 </div>
 
 <div class="container marketing">

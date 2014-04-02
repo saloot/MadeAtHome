@@ -1,0 +1,31 @@
+{% extends "base_page.html" %}
+
+{% block content %}
+
+
+
+<div style="width:500px; margin:150px auto 50px auto;">            
+    <h1 style="font-family: fantasy; font-size: 3em;">Chef <a href="/_chef?u=saloot">{{chef_id}}</a>'s Reviews</h1>
+    <h2 style="font-family: fantasy; font-size: 2em;margin-left:50px;">{{chef_rating|safe}}</h2>
+</div>
+
+    <div class="container marketing">
+      <div class="row">
+        <table class="table table-striped" style="font-family:fantasy; font-size: 1.2em;">        
+            {% for review in review_list%}
+            <tr style="height:70px;">                
+               <td style="vertical-align: middle;width:10%;">{{review.2|safe}}</td>
+               <td style="vertical-align: middle;width:5%;">{{review.1|safe}}</td>
+               <td style="vertical-align: middle;width:40%;">{{review.0|safe}}</td>        
+           </tr>
+
+            {% endfor %}
+        </table>
+      </div>
+    </div>
+
+
+  </body>
+</html>
+{% endblock %}
+

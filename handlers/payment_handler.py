@@ -21,6 +21,7 @@ from datetime import date
 from datetime import datetime
 from collections import namedtuple
 from google.appengine.api import mail
+from google.appengine.api import taskqueue
 #====================================================================================
 
 #===================================THE MAIN CODE====================================
@@ -275,6 +276,10 @@ class PaymentHandler(webapp2.RequestHandler):
             message.send()
             #==================================================================            
             
+            
+            #===================SCHEDULE A REVIEW EMAIL========================
+            taskqueue.add(url='/_reviewemail', params={'order_id': id_of_order,'user_email':user_email_add},countdown=30)
+            #==================================================================            
             
             params_new_post['user_address'] = user_address
             params_new_post['id_of_order'] = id_of_order

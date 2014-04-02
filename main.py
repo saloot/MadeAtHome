@@ -45,6 +45,12 @@ from handlers.how_handler import HowItWorksHandler
 from handlers.about_handler import AboutUsHandler
 from handlers.payment_handler import PaymentHandler
 from handlers.checkout_handler import CheckOutHandler
+from handlers.schedule_email_handler import EmailScheduleHandler
+from handlers.show_review_handler import ChefShowReview
+from handlers.send_message_handler import SendMessageHandler
+from handlers.inbox_handler import MessageInboxHandler
+from handlers.show_message_handler import ShowMessageHandler
+from handlers.outbox_handler import MessageSentHandler
 
 from utils import *
 
@@ -63,6 +69,43 @@ inf = 100000
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        
+        #---------------------------Detect the Location From IP-------------------
+        ip = self.request.remote_addr
+        response = urllib.urlopen('http://api.hostip.info/get_html.php?ip=%s&position=true'%ip).read()
+        
+        em = re.search('Longitude: \S+', str(response))
+        if em:
+            temp = em.group(0)
+            user_long = temp[10:len(temp)]            
+        else:
+            user_long = ''
+        
+        em = re.search('Latitude: \S+', str(response))
+        if em:
+            temp = em.group(0)
+            user_lat = temp[10:len(temp)]
+            self.response.out.write(user_lat)
+        else:
+            user_lat = ''
+            
+        em = re.search('Country: \S+', str(response))
+        if em:
+            temp = em.group(0)
+            user_country = temp[8:len(temp)]            
+        else:
+            user_country = ''
+        
+        em = re.search('City: \S+', str(response))
+        if em:
+            temp = em.group(0)
+            user_city = temp[6:len(temp)]            
+        else:
+            user_city = ''
+                    
+        #self.response.out.write(user_city)
+        #-------------------------------------------------------------------------
+        
         params_front = {}
         params_front['isactive'] = ['active','0']
         food_list = []
@@ -120,7 +163,10 @@ class MainHandler(webapp2.RequestHandler):
                 params_front['userid'] = userid
                 user = db.GqlQuery("SELECT * FROM UserPass_User WHERE user_id = '%s'" %userid)
                 user = user.get()
-                params_front['chef_flag'] = user.ischef
+                if user:
+                    params_front['chef_flag'] = user.ischef
+                else:
+                    params_front['chef_flag'] = 0
         
         self.response.out.write(template.render('./html/front_page.html',params_front))
         
@@ -223,7 +269,9 @@ class MainHandler(webapp2.RequestHandler):
             
             self.response.out.write(template.render('./html/front_page.html',params_front))
         else:
-            delivery_date = datetime.strptime(str(delivery_date), "%Y-%m-%dT%H:%M")            
+            delivery_date = datetime.strptime(str(delivery_date), "%Y-%m-%dT%H:%M")
+            
+            
             self.redirect('/_search?u=%s&v=%s&s=normal'%(','.join(selected_meals),delivery_date) )
                                 
 
@@ -278,12 +326,18 @@ app = webapp2.WSGIApplication([
     ('/login/?', LoginHandler),
     ('/logout/?', LogoutHandler),
     ('/display_map/?', DisplayMapHandler),    
-    ('/_meal', DisplayPostHandler),
+    ('/_meal', DisplayPostHandler),    
     ('/_paymentstatus', PaymentHandler),
     ('/_checkout', CheckOutHandler),
-    ('/_rev', ReviewHandler),
+    ('/message_send', SendMessageHandler),
+    ('/message_inbox', MessageInboxHandler),
+    ('/message_sent',MessageSentHandler),
+    ('/_msg', ShowMessageHandler),
+    ('/_review', ReviewHandler),
     ('/_search',SearchHandler),
+    ('/_reviewemail',EmailScheduleHandler),
     ('/how_it_works',HowItWorksHandler),
+    ('/_reviews_chef',ChefShowReview),
     ('/about',AboutUsHandler),
     ('/([a-zA-Z0-9]+.json)/?', DisplayPostHandler_JSON)
 ], debug=True)

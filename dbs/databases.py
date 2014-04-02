@@ -14,6 +14,24 @@ class Orders_DB(db.Model):
     order_details = db.TextProperty(required = True)
     order_status = db.StringProperty(required = True)
 
+class Reviews_DB(db.Model):
+    chef_id = db.StringProperty(required = True)
+    user_id = db.StringProperty(required = False)
+    comments = db.TextProperty(required = False)
+    order_id = db.StringProperty(required = False)
+    rating = db.IntegerProperty(required = False)
+    title = db.StringProperty(required = True)
+    
+class Messages_DB(db.Model):
+    sender_id = db.StringProperty(required = True)
+    recepient_id = db.StringProperty(required = True)
+    message_body = db.TextProperty(required = True)
+    created_date = db.DateTimeProperty(auto_now_add = True)
+    message_title = db.StringProperty(required = True)
+    message_parent = db.StringProperty(required = False)
+    read_status = db.IntegerProperty(required = True, default = 0)    
+    new_conversation = db.IntegerProperty(required = True, default = 1)
+
 class UserPass_Chef(db.Model):
     user_id = db.StringProperty(required = True)    
     user_firstname = db.StringProperty(required = True)
@@ -26,8 +44,7 @@ class UserPass_Chef(db.Model):
     user_phone = db.StringProperty(required = True)
     user_bankacnt = db.StringProperty(required = True)
     user_rating = db.IntegerProperty(required = False, default = 0)
-    no_reviews = db.IntegerProperty(required = False, default = 0)
-    reviews = db.TextProperty(required = False)
+    no_reviews = db.IntegerProperty(required = False, default = 0)    
     restaurant_name = db.StringProperty(required = True)
     
 class UserPass_User(db.Model):
